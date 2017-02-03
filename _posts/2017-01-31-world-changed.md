@@ -79,7 +79,7 @@ So, now we're at the tipping point in 2017, and unlike most languages that strug
 
 When I first started with Elixir I really was a doubting Thomas (I am). So, I wrote a some test programs that required a lot of mutating data first in Ruby and then in Elixir (github: Ruby vs Elixir) I confidently thought to myself that there was no way the Erlang garbage collection could keep up, that it would be inefficient, that tail recursion made programs hard to understand, etc. - wrong, wrong, wrong and wrong. What happened was exactly opposite - the code was faster, the program was more understandable - I had to believe the evidence in front of me.
 
-![Elixir vs Ruby Sample Code](https://github.com/tomjoro/elixir_map_pmap_apmap_example)
+[Elixir vs Ruby Sample Code](https://github.com/tomjoro/elixir_map_pmap_apmap_example)
 
 A lot of coders also mistakenly believe that Elixir/Erlang is all about concurrency and functional programming, and that hence this would be the only reason to use Elixir in a project. Erlang was created with a safety first idea - and scalable concurrency was a side effect (pun intended). It's nice to know your program is scalable, but it's nicer to know that it's simple and reliable. Still, you get a warm fuzzy feeling than seeing all your cores respond like a finely tuned machine.
 
@@ -96,7 +96,7 @@ So, where's this leading? To this: programming in Elixir/Erlang is safer. It res
 
 When something does go wrong (which still can happen of course, and does!), there is a sophisticated layer of error handling, reporting and recovering to back you up. I like to think of it as safety first, with well rehearsed rapid responding emergency services (OTP).
 Uses pattern matching and other constructs to make coding more declarative, in order to make the intent clearer, and easier to understand.
-I could go on all day about the cool stuff, like the how sweet the pre-emptive scheduler is, how the processes work, etc, but it I will sound like a raving madman. Maybe you should just go and try it for yourself. http://elixir-lang.org
+I could go on all day about the cool stuff, like the how sweet the pre-emptive scheduler is, how the processes work, the compiler, etc, but it I will sound like a raving madman. Maybe you should just go and try it for yourself. [Elixir Language Website](http://elixir-lang.org)
 
 # Conclusion
 
