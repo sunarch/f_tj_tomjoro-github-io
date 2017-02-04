@@ -2,7 +2,7 @@
 layout: post
 title: It's Windows 3.1 All Over Again
 image:
-tags: [elixir, erlang, functional programming, rails, node.js]
+tags: [Elixir, Erlang, Functional programming, Rails, node.js, Javascript, Go]
 ---
 
 A little rant. I'll add some diagrams to this article when I get some time...
@@ -87,7 +87,7 @@ if what you're doing takes a long time (which depends on what?). Think about it,
 you are writing code that needs to cooperative and understand the machine it is
 running on. That's why Go is really great for 'close-to-the-metal' programs.
 
-I don't want to be close-to-the-metal, I want to be close-to-my-logic.
+I don't want to be close-to-the-metal, I want to be close-to-my-logic. 
 
 # What if Processes Were Not Expensive?
 
