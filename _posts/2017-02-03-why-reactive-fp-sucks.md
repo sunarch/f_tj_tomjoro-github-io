@@ -15,7 +15,7 @@ We repeated the rules: don't do any long computations, and if you have to do tha
 break it up into a state machine that is then driven by messages. And most of all don't crash,
 because you will make users very unhappy.  
 
-In 1995 Microsoft started working on Windows NT. This was great, we had true pre-emptive
+In 1994 Microsoft started working on Windows NT. This was great, we had true pre-emptive
 multitasking. But thread creation and context switching was really slow. We could only
 spawn like 5 threads a second. So the "Fiber" was invented. This allowed threads to be
 shared. But threads could not be pre-empted.
