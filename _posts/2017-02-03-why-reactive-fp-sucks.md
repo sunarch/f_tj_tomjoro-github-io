@@ -40,10 +40,12 @@ has it's own memory and should not crash the entire system. This works.
 So, why the need for Node.js and 'reactive' style programming? Why do Goroutines
 share the same thread? Node.js works just like Windows 3.1. There is an event loop,
 each time you run, it runs to completion, meaning that the code that is running cannot be interrupted.
-So you have the same rules as we used back in Windows 3.1. Go
+So you have the same rules as we used back in Windows 3.1.
 
-Many Goroutines share the same thread. They also use run-to-completion semantics, a quote
-from the Go team:
+Goes does better, but it's still unable to pre-empt your code. Go can do a context switch
+when you make a system call, but only if you call something that allows a context switch.
+This means I need to know which calls would allow pre-emption, and which ones would not.
+From the Go team:
 
 ```
 It is by design. There are no plans to make the scheduler fully preemtive, in normal situations, this is not a problem.
@@ -51,7 +53,7 @@ It is by design. There are no plans to make the scheduler fully preemtive, in no
 The traditional work around is to unroll the loop and add a Gosched.
 
 ```
-In Windows 3.1 we had this thing called "Yield()" which now has become a Javascript callabck or "GoSched()"
+In Windows 3.1 we had this thing called "Yield()" which now has become a Javascript callback or "GoSched()"
  _Actually, Go does have the ability pre-empt the routine, but only if you call something where Go can
  capture the thread in the routine. "Normally not a problem", means that most code will typically call
 system routines often enough for the scheduler to run._
