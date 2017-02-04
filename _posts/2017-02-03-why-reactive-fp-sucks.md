@@ -142,8 +142,11 @@ processes you're going to have to do a lot of copying - sharing memory
 between threads is much more efficient". This is true, but sharing memory
 is also a lot more dangerous and couples the code together (GC?).
 
-You can read about that in my other blog:
+You can read about that in one of my other posts:
  [The world has changed]({{ site.baseurl }}{% link _posts/2017-01-31-world-changed.md %})_
+
+ _Short summary: Using Elixir doesn't work well for everything,
+ but you'd be surprised how often it does_
 
 # Conclusion
 
