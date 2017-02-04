@@ -59,14 +59,13 @@ Most programmers would agree that a sequential program, one that says do a) and 
 b) and then c), is easier to understand than one that breaks up the processing sequence
 just because b takes too long (and we don't want everything else in the program to pause).
 This means that the programmer must think about the scheduling in addition to the logic,
-even if the piece of code he/she is working doesn't need to be 'responsive'
+even if the piece of code he/she is working doesn't need to be 'responsive'.
 Although, this does often result in faster executing programs because the
 programmer themselves optimize the context switching (i.e. where the callbacks are in Javascript).
-And
 
 I remember an article (where is it) that showed that on Java using blocking threads was faster or basically
-equivalent to Non-blocking I/O for most things. But that was up to 10K connections.
-Nowadays we have to do much better!
+equivalent to Non-blocking I/O for most "things". But that was up to 10K connections and
+processors were slower back then. Nowadays we have to do much better!
 
 # Reactive programming, Rails, and Node.js
 
@@ -82,6 +81,13 @@ says quite clearly that the reason that it has reactive routines, i.e. shares re
 thread, is primarily for performance reasons. But watch of for nasty problems, like
 remember that you can't do anything expensive in that callback or other things will stop
 that share the same thread.
+
+Go has Goroutines, and they share a single thread, so remember to call GoSched()
+if what you're doing takes a long time (which depends on what?). Think about it,
+you are writing code that needs to cooperative and understand the machine it is
+running on. That's why Go is really great for 'close-to-the-metal' programs.
+
+I don't want to be close-to-the-metal, I want to be close-to-my-logic.
 
 # What if Processes Were Not Expensive?
 
