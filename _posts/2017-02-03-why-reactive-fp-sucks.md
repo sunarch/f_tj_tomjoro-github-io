@@ -9,8 +9,10 @@ A little rant. I'll add some diagrams to this article when I get some time...
 
 # Rewind the clocks to Windows 3.1
 
-In 1992 with Windows 3.1 we had this thing non-preemptive multitasking. There was an event loop
-that was controlled by the Windows system. You got message and you did work on those messages.
+In 1992 with Windows 3.1 we had this thing non-preemptive multitasking, i.e. "Cooperative Multitasking".
+Cooperation is a funny term, it should actually be "Programmer Controlled Multitasking" because
+you don't have to be cooperative if yo don't want to :)
+There was an event loop that was controlled by the Windows system. You got message and you did work on those messages.
 We repeated the rules: don't do any long computations, and if you have to do that,
 break it up into a state machine that is then driven by messages. And most of all don't crash,
 because you will make users very unhappy.  
@@ -30,22 +32,37 @@ Reactive programming has these characteristics:
  * It uses a central event loop to dispatch control.
  * It uses run-to-completion, i.e. there is no preemption.
 
-# Present Day and Reactive Programming (callbacks)
+# Present Day and Reactive Programming (Javascript and Go)
+
+Callbacks in Javascript and Goroutines in Go.
 
 Operating systems are built around processes for reliability. Each (user mode) process is protected
 has it's own memory and should not crash the entire system. This works.
 
-So, why the need for Node.js and 'reactive' style programming? Node.js works just like
-Windows 3.1. There is an event loop, each time you run, it runs to completion, meaning
-that the code that is running cannot be interrupted. So you have the same rules as
-we used back in Windows 3.1.
+So, why the need for Node.js and 'reactive' style programming? Why do Goroutines
+share the same thread? Node.js works just like Windows 3.1. There is an event loop,
+each time you run, it runs to completion, meaning that the code that is running cannot be interrupted.
+So you have the same rules as we used back in Windows 3.1. Go
+
+Many Goroutines share the same thread. They also use run-to-completion semantics, a quote
+from the Go team:
+
+```
+It is by design. There are no plans to make the scheduler fully preemtive, in normal situations, this is not a problem.
+
+The traditional work around is to unroll the loop and add a Gosched.
+
+```
+In Windows 3.1 we had this thing called "Yield()" which now has become "GoSched()"
 
 Most programmers would agree that a sequential program, one that says do a) and then
 b) and then c), is easier to understand than one that breaks up the processing sequence
-just because b takes too long and requires the knowledge of scheduling to be left up
-to the programmer. Often though, this does result in faster programs because the
-programmer themselves control the context switching by yielding at the appropriate
-times.
+just because b takes too long (and we don't want everything else in the program to pause).
+This means that the programmer must think about the scheduling in addition to the logic,
+even if the piece of code he/she is working doesn't need to be 'responsive'
+Although, this does often result in faster executing programs because the
+programmer themselves optimize the context switching (i.e. where the callbacks are in Javascript).
+And
 
 I remember an article (where is it) that showed that on Java using blocking threads was faster or basically
 equivalent to Non-blocking I/O for most things. But that was up to 10K connections.
