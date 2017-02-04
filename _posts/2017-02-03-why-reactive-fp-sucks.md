@@ -54,9 +54,6 @@ The traditional work around is to unroll the loop and add a Gosched.
 
 ```
 In Windows 3.1 we had this thing called "Yield()" which now has become a Javascript callback or "GoSched()".
- _Actually, Go does have the ability pre-empt the routine, but only if you call something where Go can
- capture the thread in the routine. "Normally not a problem", means that most code will typically call
-system routines often enough for the scheduler to run._
 
 Most programmers would agree that a sequential program, one that says do a) and then
 b) and then c):
@@ -156,7 +153,7 @@ can simply be shut down and restarted without taking down the entire system.
 So, yes, often Elixir is slower than Go because sometimes Erlang will interrupt a
 process and give control to another process even though it would have been more efficient not to do so.
 But this is all about fairness. Erlang wants all processes to play nicely, so
-no one process is allowed to hog the system. 
+no one process is allowed to hog the system.
 
 _Usually, at this point someone will say "Yes, that may be true, but between
 processes you're going to have to do a lot of copying - sharing memory
