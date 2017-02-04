@@ -125,7 +125,7 @@ that share the same thread.
 
 # What if Processes Were Not Expensive?
 
-What if processes were not expensive? Would you use them instead of callbacks?
+What if processes were not expensive? Would you use them instead of callbacks (reactive)?
 
 Enter Elixir. In Elixir processes are not expensive and they are protected in the
 same way operating system threads are protected. Of course you can have tons
@@ -133,7 +133,17 @@ of asynchronous stuff happening, but they all need to wait for I/O or disk they
 would all block. But blocking is not the problem
  - *it's the expense & overhead of the process (or thread)*.
 
-With true pre-emptive multi-processing you don't have to think about where
+I've seen several articles about reactive programming with this kind of statement:
+ `rather than hog a thread even while it’s blocked`. and `don't hog the thread`.
+The first thing that comes to my mind is, for example, _"what else am I supposed to do when
+I'm waiting for a result from the database"?_ I can't do anything else until I have
+that result. I need the result to make give to a template to give to the renderer, etc.
+
+Think about that - what are you hogging and from whom are you hogging it?
+These statements mislead coders into thinking that blocking is bad, when really
+the problem is that threads are a limited/expensive resource.
+
+With true pre-emptive multi-tasking you don't have to think about where
 to break up your code because of long-running tasks etc. And an errant processes
 can simply be shut down and restarted without taking down the entire system.
 
@@ -151,12 +161,13 @@ You can read about that in one of my other posts:
 # Conclusion
 
 It's no wonder why programmers who have enough experience to remember the good
-old days of Windows 3.1 are not the biggest fans of Node.js.
+old days of Windows 3.1 are not the biggest fans of Node.js. _A tuned Windows 3.1
+application actually outperformed pre-emptive systems!_ 
 
 Languages like Elixir offer both fully pre-emptive sequential programming
 (and are functional too), performance and protection. You get to focus on
-making the algorithms and logic, and not about the scheduler. This is a joy to
-a programmer (or coder as we call them nowadays).
+making your algorithms and logic, and not about the scheduling - let the scheduler
+do the scheduling and get on with on with your program. This is a joy to a programmer (or coder as we call them nowadays).
 
 # Afterward
 
