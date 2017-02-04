@@ -34,8 +34,6 @@ Reactive programming has these characteristics:
 
 # Present Day and Reactive Programming (Javascript and Go)
 
-Callbacks in Javascript and Goroutines in Go.
-
 Operating systems are built around processes for reliability. Each (user mode) process is protected
 has it's own memory and should not crash the entire system. This works.
 
@@ -53,15 +51,56 @@ It is by design. There are no plans to make the scheduler fully preemtive, in no
 The traditional work around is to unroll the loop and add a Gosched.
 
 ```
-In Windows 3.1 we had this thing called "Yield()" which now has become "GoSched()"
+In Windows 3.1 we had this thing called "Yield()" which now has become a Javascript callabck or "GoSched()"
+ _Actually, Go does have the ability pre-empt the routine, but only if you call something where Go can
+ capture the thread in the routine. "Normally not a problem", means that most code will typically call
+system routines often enough for the scheduler to run._
 
 Most programmers would agree that a sequential program, one that says do a) and then
-b) and then c), is easier to understand than one that breaks up the processing sequence
+b) and then c):
+
+```
+  10 A = 1
+  20 A = A + 1
+  30 PRINT "HELLO " + A
+  40 PRINT "YES"
+  50 GOTO 20
+```
+
+is easier to understand than one that breaks up the processing sequence
 just because b takes too long (and we don't want everything else in the program to pause).
+
+```
+  10 A = 1
+  20 A = A + 1
+  30 PRINT_NON_BLOCKING "HELLO" + "A", when done callback { LINE 40 }
+  40 PRINT "YES"
+  50 GOTO 20
+```
+In this example, the PRINT statement is very slow and uses I/O. So to avoid us blocking
+the entire program, we have call a non-blocking routine PRINT_NON_BLOCKING, and give it a callback on what
+to do when it is complete.
+
+A common quiz for Javascript is to ask: which is printed first? "YES" or "HELLO3"? It's
+always going to be "YES" first, because there is no way for the callback even to try to
+run until you _give up the thread, i.e. run to completion_.  Actually, in this sillly
+example the callback can never run, because our code never gives returns :)
+
 This means that the programmer must think about the scheduling in addition to the logic,
 even if the piece of code he/she is working doesn't need to be 'responsive'.
 Although, this does often result in faster executing programs because the
 programmer themselves optimize the context switching (i.e. where the callbacks are in Javascript).
+
+If we wanted to do this in Elixir it would work like this:
+
+```
+  10 A = 1
+  20 A = A + 1
+  30 PID = PRINT_NON_BLOCKING "HELLO" + "A"
+  40 PRINT "YES"
+  35 WAIT FOR MESSAGE ON PID
+  50 GOTO 20
+```
 
 I remember an article (where is it) that showed that on Java using blocking threads was faster or basically
 equivalent to Non-blocking I/O for most "things". But that was up to 10K connections and
@@ -83,11 +122,11 @@ remember that you can't do anything expensive in that callback or other things w
 that share the same thread.
 
 Go has Goroutines, and they share a single thread, so remember to call GoSched()
-if what you're doing takes a long time (which depends on what?). Think about it,
-you are writing code that needs to cooperative and understand the machine it is
+if what you're doing takes a long time? Think about it,
+you are writing code that needs to be cooperative and understand the machine it is
 running on. That's why Go is really great for 'close-to-the-metal' programs.
 
-I don't want to be close-to-the-metal, I want to be close-to-my-logic. 
+I don't want to be close-to-the-metal, I want to be close-to-my-logic.
 
 # What if Processes Were Not Expensive?
 
@@ -117,8 +156,8 @@ a programmer (or coder as we call them nowadays).
 Some of you web developers might be thinking: "yeah, true, but you need to
 keep things responsive for the user, so you do have to think about scheduling".
 
-Very true. However, a complete application whether it is a desktop application or
-web application usually does more than just respond to user clicks. There are long running
+Very true. However, a complete application, whether it is a desktop application or
+web application, usually does more than just respond to user clicks. There are long running
 reporting jobs, talking to external REST API services, etc. In Rails or Node.js it's
 typically an all or nothing decision about what should be run on background tasks and
 requires using external databases like Redis, and external monitoring tools.
