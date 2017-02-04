@@ -5,22 +5,24 @@ image:
 tags: [elixir, erlang, functional programming, rails, node.js]
 ---
 
-I don't usually rant, but here goes...
+A little rant. I'll add some diagrams to this article when I get some time...
 
 # Rewind the clocks to Windows 3.1
 
-In 1992 with Windows 3.1 we had this thing non-preemptive multitasking. And this event loop
+In 1992 with Windows 3.1 we had this thing non-preemptive multitasking. There was an event loop
 that was controlled by the Windows system. You got message and you did work on those messages.
-We repeated the rules, don't do any long computations. And if you have to do that,
-break it up into a state machine that is then driven by messages. And most of all don't crash
+We repeated the rules: don't do any long computations, and if you have to do that,
+break it up into a state machine that is then driven by messages. And most of all don't crash,
 because you will make users very unhappy.  
 
 In 1995 Microsoft started working on Windows NT. This was great, we had true pre-emptive
 multitasking. But thread creation and context switching was really slow. We could only
 spawn like 5 threads a second. So the "Fiber" was invented. This allowed threads to be
-shared. Nice. But what happened to fibers, was that the same problem that we had with
+shared. But threads could not be pre-empted.
+
+Nice. But what happened to fibers, was that the same problem that we had with
 non-preemptive multitasking happened all over again. Eventually thread creation and
-context switching go fast, and fibers were relegated to 'special problems'.
+context switching got fast, and fibers were relegated to 'special problems'.
 
 Reactive programming is also known as non-blocking I/O, but it is not the same thing.
 Reactive programming has these characteristics:
@@ -33,7 +35,7 @@ Reactive programming has these characteristics:
 Operating systems are built around processes for reliability. Each (user mode) process is protected
 has it's own memory and should not crash the entire system. This works.
 
-So, why the need for Node.js and 'reactive' style programming. Node.js works just like
+So, why the need for Node.js and 'reactive' style programming? Node.js works just like
 Windows 3.1. There is an event loop, each time you run, it runs to completion, meaning
 that the code that is running cannot be interrupted. So you have the same rules as
 we used back in Windows 3.1.
@@ -70,8 +72,8 @@ What if processes were not expensive? Would you use them instead of callbacks?
 
 Enter Elixir. In Elixir processes are not expensive and they are protected in the
 same way operating system threads are protected. Of course you can have tons
-of asynchronous stuff happening, but they are indeed all blocking. But blocking
-is not the problem, the expense & overhead of the process is.
+of asynchronous stuff happening, but they all need to wait for I/O or disk they
+would all block. But blocking is not the problem - *the expense & overhead of the process is*
 
 With true pre-emptive multi-processing you don't have to think about where
 to break up your code because of long-running tasks etc. And an errant processes
@@ -83,4 +85,22 @@ It's no wonder why programmers who have enough experience to remember the good
 old days of Windows 3.1 are not the biggest fans of Node.js.
 
 Languages like Elixir offer both fully pre-emptive sequential programming
-(and are functional too), performance and protection.
+(and are functional too), performance and protection. You get to focus on
+making the algorithms and logic, and not about the scheduler. This is a joy to
+a programmer (or coder as we call them nowadays).
+
+# Afterward
+
+Some of you web developers might be thinking: "yeah, true, but you need to
+keep things responsive for the user, so you do have to think about scheduling".
+
+Very true. However, a complete application whether it is a desktop application or
+web application usually does more than just respond to user clicks. There are long running
+reporting jobs, talking to external REST API services, etc. In Rails or Node.js it's
+typically an all or nothing decision about what should be run on background tasks and
+requires using external databases like Redis, and external monitoring tools.
+
+Elixir provides a much more predictive environment for your code. You can easily refactor
+code that was previously synchronous to run asynchronously with no change to your
+core logic. Nothing prevents you from using Redis, etc., but use it only when you
+need a persistent task, not just because something needs to run asynchronusly.
