@@ -129,9 +129,13 @@ What if processes were not expensive? Would you use them instead of callbacks (r
 
 Enter Elixir. In Elixir processes are not expensive and they are protected in the
 same way operating system threads are protected. Of course you can have tons
-of asynchronous stuff happening, but they all need to wait for I/O or disk they
-would all block. But blocking is not the problem
+of asynchronous stuff happening, but if all your processes are waiting on I/O, for example
+waiting for a database request to complete, they all would be blocked.
+But blocking is not the problem.
  - *it's the expense & overhead of the process (or thread)*.
+
+ Node.js (Reactive programming) tell us that blocking is the problem that is being solved.
+ Blocking is not the problem.
 
 I've seen several articles about reactive programming with this kind of statement:
  `rather than hog a thread even while it’s blocked`. and `don't hog the thread`.
@@ -141,15 +145,22 @@ that result. I need the result to make give to a template to give to the rendere
 
 Think about that - what are you hogging and from whom are you hogging it?
 These statements mislead coders into thinking that blocking is bad, when really
-the problem is that threads are a limited/expensive resource.
+the problem is that threads are a limited resource and context switching (sharing)
+that resource is resource.
 
-With true pre-emptive multi-tasking you don't have to think about where
+In Elixir (thanks to Erlang) yo have true pre-emptive multi-tasking, and processes
+are really efficient and inexpensive. You don't have to think about where
 to break up your code because of long-running tasks etc. And an errant processes
 can simply be shut down and restarted without taking down the entire system.
 
-Usually, at this point someone will say "Yes, that may be true, but between
+So, yes, often Elixir is slower than Go because sometimes Erlang will interrupt a
+process and give control to another process even though it would have been more efficient not to do so.
+But this is all about fairness. Erlang wants all processes to play nicely, so
+no one process is allowed to hog the system. 
+
+_Usually, at this point someone will say "Yes, that may be true, but between
 processes you're going to have to do a lot of copying - sharing memory
-between threads is much more efficient". This is true, but sharing memory
+between threads is much more efficient"._ This is true, but sharing memory
 is also a lot more dangerous and couples the code together (GC?).
 
 You can read about that in one of my other posts:
@@ -162,12 +173,12 @@ You can read about that in one of my other posts:
 
 It's no wonder why programmers who have enough experience to remember the good
 old days of Windows 3.1 are not the biggest fans of Node.js. _A tuned Windows 3.1
-application actually outperformed pre-emptive systems!_ 
+application often outperformed pre-emptive systems of the day!_
 
 Languages like Elixir offer both fully pre-emptive sequential programming
 (and are functional too), performance and protection. You get to focus on
-making your algorithms and logic, and not about the scheduling - let the scheduler
-do the scheduling and get on with on with your program. This is a joy to a programmer (or coder as we call them nowadays).
+making your algorithms and logic, and not the scheduling - let the scheduler
+do the scheduling and you get on with on with your program. This is a joy to a programmer (or coder as we call them nowadays).
 
 # Afterward
 
