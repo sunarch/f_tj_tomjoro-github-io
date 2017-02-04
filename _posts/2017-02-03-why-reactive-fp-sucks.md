@@ -53,7 +53,7 @@ It is by design. There are no plans to make the scheduler fully preemtive, in no
 The traditional work around is to unroll the loop and add a Gosched.
 
 ```
-In Windows 3.1 we had this thing called "Yield()" which now has become a Javascript callback or "GoSched()"
+In Windows 3.1 we had this thing called "Yield()" which now has become a Javascript callback or "GoSched()".
  _Actually, Go does have the ability pre-empt the routine, but only if you call something where Go can
  capture the thread in the routine. "Normally not a problem", means that most code will typically call
 system routines often enough for the scheduler to run._
@@ -137,6 +137,14 @@ With true pre-emptive multi-processing you don't have to think about where
 to break up your code because of long-running tasks etc. And an errant processes
 can simply be shut down and restarted without taking down the entire system.
 
+Usually, at this point someone will say "Yes, that may be true, but between
+processes you're going to have to do a lot of copying - sharing memory
+between threads is much more efficient". This is true, but sharing memory
+is also a lot more dangerous and couples the code together (GC?).
+
+You can read about that in my other blog:
+ [The world has changed]({{ site.baseurl }}{% link _posts/2017-01-31-world-changed.md %})_
+
 # Conclusion
 
 It's no wonder why programmers who have enough experience to remember the good
@@ -159,6 +167,6 @@ typically an all or nothing decision about what should be run on background task
 requires using external databases like Redis, and external monitoring tools.
 
 Elixir provides a much more predictive environment for your code. You can easily refactor
-code that was previously synchronous to run asynchronously with no change to your
-core logic. Nothing prevents you from using Redis, etc., but use it only when you
+code that was previously synchronous to run asynchronously with little changes
+to your sequential logic. Nothing prevents you from using Redis, etc., but use it only when you
 need a persistent task, not just because something needs to run asynchronusly.
