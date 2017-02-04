@@ -84,7 +84,7 @@ to do when it is complete.
 A common quiz for Javascript is to ask: which is printed first? "YES" or "HELLO3"? It's
 always going to be "YES" first, because there is no way for the callback even to try to
 run until you _give up the thread, i.e. run to completion_.  Actually, in this sillly
-example the callback can never run, because our code never gives returns :)
+example the callback can never run, because our code never returns :)
 
 This means that the programmer must think about the scheduling in addition to the logic,
 even if the piece of code he/she is working doesn't need to be 'responsive'.
@@ -120,13 +120,6 @@ says quite clearly that the reason that it has reactive routines, i.e. shares re
 thread, is primarily for performance reasons. But watch of for nasty problems, like
 remember that you can't do anything expensive in that callback or other things will stop
 that share the same thread.
-
-Go has Goroutines, and they share a single thread, so remember to call GoSched()
-if what you're doing takes a long time? Think about it,
-you are writing code that needs to be cooperative and understand the machine it is
-running on. That's why Go is really great for 'close-to-the-metal' programs.
-
-I don't want to be close-to-the-metal, I want to be close-to-my-logic.
 
 # What if Processes Were Not Expensive?
 
