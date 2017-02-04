@@ -140,15 +140,27 @@ The first thing that comes to my mind is, for example, _"what else am I supposed
 I'm waiting for a result from the database"?_ I can't do anything else until I have
 that result. I need the result to make give to a template to give to the renderer, etc.
 
-Think about that - what are you hogging and from whom are you hogging it?
+What are you hogging and from whom are you hogging it?
 These statements mislead coders into thinking that blocking is bad, when really
 the problem is that threads are a limited resource and context switching (sharing)
-that resource is resource.
+(between threads) is expensive. Just for clarity: _there is nothing bad about blocking._
+If your code needs to wait for a result, then it needs to wait for a result.
+You can transpose this into a callback or promise, but you haven't changed
+the logic.
 
 In Elixir (thanks to Erlang) yo have true pre-emptive multi-tasking, and processes
 are really efficient and inexpensive. You don't have to think about where
 to break up your code because of long-running tasks etc. And an errant processes
 can simply be shut down and restarted without taking down the entire system.
+
+In Elixir most I/O functions block, so your code stays sequential. If you don't
+want to wait, then don't. Why might you not want to wait? Maybe you want to start
+2 or 3 things in parallel, or maybe there something useful you can do before
+you get your result from the blocking function. Any blocking function can easily
+be made non-blocking by simply wrapping it in a spawn() so that it
+starts asynchronously. Note here that the reason for not blocking is because
+_you can do something useful while you are waiting_, and has nothing to do
+with hogging or stealing resources.
 
 So, yes, often Elixir is slower than Go because sometimes Erlang will interrupt a
 process and give control to another process even though it would have been more efficient not to do so.
