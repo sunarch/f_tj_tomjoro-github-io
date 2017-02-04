@@ -128,7 +128,8 @@ What if processes were not expensive? Would you use them instead of callbacks?
 Enter Elixir. In Elixir processes are not expensive and they are protected in the
 same way operating system threads are protected. Of course you can have tons
 of asynchronous stuff happening, but they all need to wait for I/O or disk they
-would all block. But blocking is not the problem - *the expense & overhead of the process is*
+would all block. But blocking is not the problem
+ - *it's the expense & overhead of the process (or thread)*.
 
 With true pre-emptive multi-processing you don't have to think about where
 to break up your code because of long-running tasks etc. And an errant processes
