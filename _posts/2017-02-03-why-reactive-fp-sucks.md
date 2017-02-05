@@ -24,11 +24,12 @@ because you will make users very unhappy.
 In 1994 Microsoft started working on Windows NT. This was great, we had true pre-emptive
 multitasking. But thread creation and context switching was really slow. We could only
 spawn like 5 threads a second. So the "Fiber" was invented. This allowed threads to be
-shared. But threads could not be pre-empted.
+shared. But fibers could not be pre-empted because they were not true threads.
 
-Nice. But what happened to fibers, was that the same problem that we had with
-non-preemptive multitasking happened all over again. Eventually thread creation and
+The problems with fibers were the same problems that we had with
+non-preemptive multitasking all over again. Eventually thread creation and
 context switching got fast, and fibers were relegated to 'special problems'.
+(Like external iterators in Ruby are nice with fibers)
 
 Reactive programming is also known as non-blocking I/O, but it is not the same thing.
 Reactive programming has these characteristics:
@@ -214,6 +215,9 @@ Languages like Elixir offer both fully pre-emptive sequential programming
 (and are functional too), performance and protection. You get to focus on
 making your algorithms and logic, and not the scheduling - let the scheduler
 do the scheduling and you get on with on with your program. This is a joy to a programmer (or coder as we call them nowadays).
+
+Furthermore, thread sharing is a temporary artifact, and will eventually fade
+away into the history books.
 
 # Afterward
 
