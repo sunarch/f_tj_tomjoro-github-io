@@ -194,7 +194,7 @@ is also a lot more dangerous and couples the code together.
 
 *Performance is great, but not when at the cost of safety*
 
-This is Erlang's mantra. _It is better to be safe, and fair, than it is to be
+This is Erlang's mantra: _It is better to be safe, and fair, than it is to be
 fast._ The world seems to be obsessed with performance. Elixir performs well,
 And it does that in a fair and safe manner.
 
