@@ -192,13 +192,11 @@ processes you're going to have to do a lot of copying - sharing memory
 between threads is much more efficient"._ This is true, but sharing memory
 is also a lot more dangerous and couples the code together.
 
-This is the most important thing I'm going to say in this post:
-
-* Performance is great, but not when it comes with the cost of safety *
+*Performance is great, but not when at the cost of safety*
 
 This is Erlang's mantra. _It is better to be safe, and fair, than it is to be
 fast._ The world seems to be obsessed with performance. Elixir performs well,
-And it does that in a fair and safe manner. 
+And it does that in a fair and safe manner.
 
 You can read about that in one of my other posts:
  [The world has changed]({{ site.baseurl }}{% link _posts/2017-01-31-world-changed.md %})_
