@@ -199,7 +199,7 @@ fast._ The world seems to be obsessed with performance. Elixir performs well,
 And it does that in a fair and safe manner.
 
 You can read about that in one of my other posts:
- [The world has changed]({{ site.baseurl }}{% link _posts/2017-01-31-world-changed.md %})_
+ [The world has changed]({{ site.baseurl }}{% link _posts/2017-01-31-world-changed.md %})
 
  _Short summary: Using Elixir doesn't work well for everything,
  but you'd be surprised how often it does_
