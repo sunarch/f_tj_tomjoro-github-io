@@ -5,7 +5,11 @@ image:
 tags: [Elixir, Erlang, Functional programming, Rails, node.js, Javascript, Go]
 ---
 
-A little rant. I'll add some diagrams to this article when I get some time...
+Reactive programming and thread sharing.
+
+This article is primarily about Reactive FP, but also thread sharing. Reactive
+style of programming is used in Node.js. Thread sharing, aka lightweight-threads,
+fibers, goroutines, is present in Node.js, Go, Play framework, etc.
 
 # Rewind the clocks to Windows 3.1
 
@@ -42,9 +46,12 @@ share the same thread? Node.js works just like Windows 3.1. There is an event lo
 each time you run, it runs to completion, meaning that the code that is running cannot be interrupted.
 So you have the same rules as we used back in Windows 3.1.
 
-Goes does better, but it's still unable to pre-empt your code. Go can do a context switch
+Go does better, but it's still unable to pre-empt your code. Go can do a context switch
 when you make a system call, but only if you call something that allows a context switch.
 This means I need to know which calls would allow pre-emption, and which ones would not.
+_Go is trying to add pre-emption, but this is really difficult given that
+the thread is shared between goroutines_
+
 From the Go team:
 
 ```
@@ -115,7 +122,7 @@ get true multi-tasking.
 
 Popular frameworks like Play on Scala achieve performance by mixing threads and
 reactive programming (callbacks). And if you read the text on the Play website, it
-says quite clearly that the reason that it has reactive routines, i.e. shares requests on the same
+states that the reason that it has reactive routines, i.e. shares requests on the same
 thread, is primarily for performance reasons. But watch of for nasty problems, like
 remember that you can't do anything expensive in that callback or other things will stop
 that share the same thread.
@@ -162,15 +169,36 @@ starts asynchronously. Note here that the reason for not blocking is because
 _you can do something useful while you are waiting_, and has nothing to do
 with hogging or stealing resources.
 
+An Erlang process is not a system process. An Erlang process is a lightweight
+process. But here's a key difference: there is no way in Erlang for processes
+to share memory, or mutate data. Data is always immutable, and never shared.
+People miss that point because most other languages talk about things _you
+shouldn't use_, in Erlang _those mechanism don't exist_.
+
 So, yes, often Elixir is slower than Go because sometimes Erlang will interrupt a
 process and give control to another process even though it would have been more efficient not to do so.
 But this is all about fairness. Erlang wants all processes to play nicely, so
 no one process is allowed to hog the system.
 
+Erlang (the VM) basically _is an operating system_: it is the scheduler. It is a very
+difficult to make your own fair scheduler. Most languages won't even try, and instead
+rely on the native threads and processes. And programmers resort to 'thread-sharing' when
+this performance is not good enough. Take a look at the Erlang scheduler and you
+see how difficult it is, and how elegantly Erlang solves this - from 30 years
+of experience!
+
 _Usually, at this point someone will say "Yes, that may be true, but between
 processes you're going to have to do a lot of copying - sharing memory
 between threads is much more efficient"._ This is true, but sharing memory
-is also a lot more dangerous and couples the code together (GC?).
+is also a lot more dangerous and couples the code together.
+
+This is the most important thing I'm going to say in this post:
+
+* Performance is great, but not when it comes with the cost of safety *
+
+This is Erlang's mantra. _It is better to be safe, and fair, than it is to be
+fast._ The world seems to be obsessed with performance. Elixir performs well,
+And it does that in a fair and safe manner. 
 
 You can read about that in one of my other posts:
  [The world has changed]({{ site.baseurl }}{% link _posts/2017-01-31-world-changed.md %})_
