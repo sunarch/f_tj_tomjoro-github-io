@@ -11,6 +11,12 @@ This article is primarily about Reactive FP, but also thread sharing. Reactive
 style of programming is used in Node.js. Thread sharing, aka lightweight-threads,
 fibers, goroutines, is present in Node.js, Go, Play framework, etc.
 
+"Don't hog the thread". This statement only makes sense in non-preemptive or
+cooperative multitasking, i.e. where a thread is shared. Cooperative multitasking makes sense when you are
+dealing with a resource that is inherently synchronous, like updating a user
+interface. But databases, I/O, network services, are all asynchronous, so why
+would you use cooperative multitasking?
+
 # Rewind the clocks to Windows 3.1
 
 In 1992 with Windows 3.1 we had this thing non-preemptive multitasking, i.e. "Cooperative Multitasking".
@@ -34,8 +40,9 @@ context switching got fast, and fibers were relegated to 'special problems'.
 Reactive programming is also known as non-blocking I/O, but it is not the same thing.
 Reactive programming has these characteristics:
 
- * It uses a central event loop to dispatch control.
- * It uses run-to-completion, i.e. there is no preemption.
+ * It uses a central event loop to dispatch control,
+ * It uses run-to-completion, i.e. there is no preemption,
+ * And most often, it is implemented with thread sharing.
 
 # Present Day and Reactive Programming (Javascript and Go)
 
@@ -156,6 +163,9 @@ If your code needs to wait for a result, then it needs to wait for a result.
 You can transpose this into a callback or promise, but you haven't changed
 the logic.
 
+If you block a thread that is implementing the user interface then the user
+interface would pause if is a single threaded user interface. Don't do that.
+
 In Elixir (thanks to Erlang) yo have true pre-emptive multi-tasking, and processes
 are really efficient and inexpensive. You don't have to think about where
 to break up your code because of long-running tasks etc. And an errant processes
@@ -164,11 +174,17 @@ can simply be shut down and restarted without taking down the entire system.
 In Elixir most I/O functions block, so your code stays sequential. If you don't
 want to wait, then don't. Why might you not want to wait? Maybe you want to start
 2 or 3 things in parallel, or maybe there something useful you can do before
-you get your result from the blocking function. Any blocking function can easily
+you get your result from the blocking function, or maybe you are drawing
+a user interface and don't want it to pause.
+
+Any blocking function can easily
 be made non-blocking by simply wrapping it in a spawn() so that it
-starts asynchronously. Note here that the reason for not blocking is because
-_you can do something useful while you are waiting_, and has nothing to do
-with hogging or stealing resources.
+starts asynchronously. The reason for not blocking is because
+
+* You can do something useful in the meanwhile and get the result later,
+* Or, you don't even care about the result.
+
+*It has nothing to do with hogging or stealing resources.*
 
 An Erlang process is not a system process. An Erlang process is a lightweight
 process. But here's a key difference: there is no way in Erlang for processes
@@ -214,10 +230,16 @@ application often outperformed pre-emptive systems of the day!_
 Languages like Elixir offer both fully pre-emptive sequential programming
 (and are functional too), performance and protection. You get to focus on
 making your algorithms and logic, and not the scheduling - let the scheduler
-do the scheduling and you get on with on with your program. This is a joy to a programmer (or coder as we call them nowadays).
+do the scheduling and you get on with on with your program. Wait if you want
+to, or don't wait if you don't want or don't need to - take your pick.
+This is a joy to a programmer (or coder as we call them nowadays).
 
-Furthermore, thread sharing is a temporary artifact, and will eventually fade
-away into the history books.
+Event based programming exists, and is useful in a lot of situations.
+However, using it to share threads because of the expense of having a thread is
+conflating the two concepts. Thread sharing as a performance optimization
+is a temporary artifact, and will eventually fade away into the history books.
+Better still, don't use threads at all, use processes that don't/can't share
+memory.
 
 # Afterward
 
