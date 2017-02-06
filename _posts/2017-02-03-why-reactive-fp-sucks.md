@@ -2,20 +2,12 @@
 layout: post
 title: It's Windows 3.1 All Over Again
 image:
-tags: [Elixir, Erlang, Functional programming, Rails, node.js, Javascript, Go]
+tags: [Elixir, Erlang, Functional programming, Rails, Node.js, Javascript, Go]
 ---
 
 Reactive programming and thread sharing.
 
-This article is primarily about Reactive FP, but also thread sharing. Reactive
-style of programming is used in Node.js. Thread sharing, aka lightweight-threads,
-fibers, goroutines, is present in Node.js, Go, Play framework, etc.
-
-"Don't hog the thread". This statement only makes sense in non-preemptive or
-cooperative multitasking, i.e. where a thread is shared. Cooperative multitasking makes sense when you are
-dealing with a resource that is inherently synchronous, like updating a user
-interface. But databases, I/O, network services, are all asynchronous, so why
-would you use cooperative multitasking?
+Javascript, Node.js, Go, Rails, Elixir and Erlang.
 
 # Rewind the clocks to Windows 3.1
 
@@ -42,33 +34,38 @@ Reactive programming has these characteristics:
 
  * It uses a central event loop to dispatch control,
  * It uses run-to-completion, i.e. there is no preemption,
- * And most often, it is implemented with thread sharing.
 
-# Present Day and Reactive Programming (Javascript and Go)
+# Present Day and Reactive Programming
 
 Operating systems are built around processes for reliability. Each (user mode) process is protected
-has it's own memory and should not crash the entire system. This works.
+has it's own memory and should not crash the entire system. Threads run concurrently but share memory.
+That's the main different between a process and thread in a nutshell.
 
-So, why the need for Node.js and 'reactive' style programming? Why do Goroutines
-share the same thread? Node.js works just like Windows 3.1. There is an event loop,
+So, why the need for Node.js and 'reactive' style programming? Node.js works just like Windows 3.1. There is an event loop,
 each time you run, it runs to completion, meaning that the code that is running cannot be interrupted.
 So you have the same rules as we used back in Windows 3.1.
 
-Go does better, but it's still unable to pre-empt your code. Go can do a context switch
-when you make a system call, but only if you call something that allows a context switch.
-This means I need to know which calls would allow pre-emption, and which ones would not.
-_Go is trying to add pre-emption, but this is really difficult given that
-the thread is shared between goroutines_
+I've heard a few reasons:
+ * Concurrency is hard, so by doing everything on a single thread we have no problem,
+ * Thread scheduling is expensive, so by sharing a thread we gain efficiencies.
 
-From the Go team:
+But at what cost?
 
-```
-It is by design. There are no plans to make the scheduler fully preemtive, in normal situations, this is not a problem.
+# Concurrency is Hard
 
-The traditional work around is to unroll the loop and add a Gosched.
+Concurrency is hard. If you want concurrency you have two choices - processes
+or threads, take your pick. If you pick processes then concurrency is easy, but
+you can't share memory. If you pick threads, then you can share memory, but
+you have to understand synchronization. If you pick neither, and run everything
+on a single thread, then you don't have concurrency (you have an optimization).
 
-```
-In Windows 3.1 we had this thing called "Yield()" which now has become a Javascript callback or "GoSched()".
+Using a single thread with a dispatch loop is not concurrency. What you are doing
+is optimizing the use of a single thread. And by doing so, you must take over the role
+of thread scheduling, thread fairness, etc. Not only that, but in order to
+achieve any real concurrency you must run multiple instances of your application (processes)
+whether that makes sense or not.
+
+# Sequential Logic
 
 Most programmers would agree that a sequential program, one that says do a) and then
 b) and then c):
@@ -120,11 +117,28 @@ I remember an article (where is it) that showed that on Java using blocking thre
 equivalent to Non-blocking I/O for most "things". But that was up to 10K connections and
 processors were slower back then. Nowadays we have to do much better!
 
-# Reactive programming, Rails, and Node.js
+# Starting Multiple Processes
 
-Why is Node.js so popular, and why does it work so well? Node.js was created because
-threads are once again too slow & expensive. Rails uses threads, and if you create 2000 threads
-you will find your system performance degraded. But the style of programming in Rails
+Starting multiple processes in Node.js
+
+The common configuration Node.js is that in order to achieve concurrency you
+start multiple instances of an application. But what if every process talks to
+a database. If your application is talking to a database, you might be able to
+start a maximum of 10 concurrent requests (handled by the driver). At the same
+time your database may have a maximum of 100 connections. If you arbitrarily add
+more instances you may be surprise that the 11th instance of your application
+causes things to start failing.
+
+What you want is to say that your "application" can have a maximum of 100
+connections to the database. How can you fairly share this across your
+separate processes?
+
+# Thread Sharing
+
+Why is Node.js so popular, and why does it work so well?
+
+Node.js was created because threads are once again too slow & expensive. Rails uses threads, and
+if you create 2000 threads you will find your system performance degraded. But the style of programming in Rails
 is great. Very clear sequential code, easy to understand. And if you use JRuby you
 get true multi-tasking.
 
@@ -135,11 +149,18 @@ thread, is primarily for performance reasons. But watch of for nasty problems, l
 remember that you can't do anything expensive in that callback or other things will stop
 that share the same thread.
 
+Try as much as you can, anything that can get stuck.
+Maybe it's something as simple as a log statement, for example, the logger is now blocked
+writing to a file. The synchronous version worked in tests, but now something happened in
+production, the permissions were wrong, a backup has locked a file, etc., and
+everything pauses. (Not only what you're trying to do - but everything else that
+_coincidentally_ might be using the same thread.)
+
 # What if Processes Were Not Expensive?
 
 What if processes were not expensive? Would you use them instead of callbacks (reactive)?
 
-Enter Elixir. In Elixir processes are not expensive and they are protected in the
+In Elixir processes are not expensive and they are protected in the
 same way operating system threads are protected. Of course you can have tons
 of asynchronous stuff happening, but if all your processes are waiting on I/O, for example
 waiting for a database request to complete, they all would be blocked.
@@ -157,7 +178,7 @@ that result. I need the result to make give to a template to give to the rendere
 
 What are you hogging and from whom are you hogging it?
 These statements mislead coders into thinking that blocking is bad, when really
-the problem is that threads are a limited resource and context switching (sharing)
+the problem is that threads are a limited resource and context switching
 (between threads) is expensive. Just for clarity: _there is nothing bad about blocking._
 If your code needs to wait for a result, then it needs to wait for a result.
 You can transpose this into a callback or promise, but you haven't changed
@@ -165,9 +186,11 @@ the logic.
 
 If you block a thread that is implementing the user interface then the user
 interface would pause if is a single threaded user interface. Don't do that.
+But that's because the user interface is typically implemented as a single
+resource, and it makes sense for it to be synchronous.
 
 In Elixir (thanks to Erlang) yo have true pre-emptive multi-tasking, and processes
-are really efficient and inexpensive. You don't have to think about where
+are efficient and inexpensive. You don't have to think about where
 to break up your code because of long-running tasks etc. And an errant processes
 can simply be shut down and restarted without taking down the entire system.
 
@@ -179,27 +202,32 @@ a user interface and don't want it to pause.
 
 Any blocking function can easily
 be made non-blocking by simply wrapping it in a spawn() so that it
-starts asynchronously. The reason for not blocking is because
+starts asynchronously. In fact the logger in Elixir (Erlang) will automatically
+switch between synchronous and asynchronous modes based on the feedback it
+gets from the system.
+
+The reason for not blocking is because:
 
 * You can do something useful in the meanwhile and get the result later,
 * Or, you don't even care about the result.
 
 *It has nothing to do with hogging or stealing resources.*
 
+# Erlang Processes
 An Erlang process is not a system process. An Erlang process is a lightweight
 process. But here's a key difference: there is no way in Erlang for processes
 to share memory, or mutate data. Data is always immutable, and never shared.
 People miss that point because most other languages talk about things _you
 shouldn't use_, in Erlang _those mechanism don't exist_.
 
-So, yes, often Elixir is slower than Go because sometimes Erlang will interrupt a
+So, yes, often Elixir is slower than Javascript because sometimes Erlang will interrupt a
 process and give control to another process even though it would have been more efficient not to do so.
 But this is all about fairness. Erlang wants all processes to play nicely, so
 no one process is allowed to hog the system.
 
 Erlang (the VM) basically _is an operating system_: it is the scheduler. It is a very
 difficult to make your own fair scheduler. Most languages won't even try, and instead
-rely on the native threads and processes. And programmers resort to 'thread-sharing' when
+rely on the native threads and processes. And Javascript resort sto 'thread-sharing' when
 this performance is not good enough. Take a look at the Erlang scheduler and you
 see how difficult it is, and how elegantly Erlang solves this - from 30 years
 of experience!
@@ -234,9 +262,14 @@ do the scheduling and you get on with on with your program. Wait if you want
 to, or don't wait if you don't want or don't need to - take your pick.
 This is a joy to a programmer (or coder as we call them nowadays).
 
-Event based programming exists, and is useful in a lot of situations.
-However, using it to share threads because of the expense of having a thread is
-conflating the two concepts. Thread sharing as a performance optimization
+Event based programming is good, and is useful in a lot of situations.
+However, using it to share a thread because of the expense of having a thread is
+conflating the two concepts. If you afraid of concurrency primitives, and
+you want concurrency you'll be better served by Go. _That's why I see Go
+as mainly an alternative to Javascript_ Go provides a much safer way to
+do concurrency, but it still uses shared threads via Goroutines.
+
+Thread sharing as a performance optimization
 is a temporary artifact, and will eventually fade away into the history books.
 Better still, don't use threads at all, use processes that don't/can't share
 memory.
