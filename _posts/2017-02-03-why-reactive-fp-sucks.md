@@ -167,7 +167,7 @@ system.
 What if processes were not expensive? Would you use them instead of callbacks (reactive)?
 
 In Elixir processes are not expensive and they are protected in the
-same way operating system threads are protected. Of course you can have tons
+same way operating system processes are protected. Of course you can have tons
 of asynchronous stuff happening, but if all your processes are waiting on I/O, for example
 waiting for a database request to complete, they all would be blocked.
 But blocking is not the problem.
