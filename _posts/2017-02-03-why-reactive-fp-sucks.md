@@ -46,6 +46,7 @@ each time you run, it runs to completion, meaning that the code that is running 
 So you have the same rules as we used back in Windows 3.1.
 
 I've heard a few reasons:
+
  * Concurrency is hard, so by doing everything on a single thread we have no problem,
  * Thread scheduling is expensive, so by sharing a thread we gain efficiencies.
 
@@ -155,6 +156,11 @@ writing to a file. The synchronous version worked in tests, but now something ha
 production, the permissions were wrong, a backup has locked a file, etc., and
 everything pauses. (Not only what you're trying to do - but everything else that
 _coincidentally_ might be using the same thread.)
+
+If you are running single threaded, then you have no other choice then to use
+some sort of reactive programming (i.e. event loop + callbacks), or some
+sort of yielding as is done with fibers because a single thread cannot be pre-empted by the
+system.  
 
 # What if Processes Were Not Expensive?
 
