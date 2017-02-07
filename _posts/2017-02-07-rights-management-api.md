@@ -11,7 +11,7 @@ Rights management is a core piece of many applications. And it certainly seems
 like one of those things that has been done before. Or not?
 
 The world is not the same, but user and permissions management has little
-changed over the year. Most software either does a custom implementation or
+changed over the years. Most software either does a custom implementation or
 they resort to LDAP or ActiveDirectory.
 
 These traditional services are database driven monstrosities and are not
