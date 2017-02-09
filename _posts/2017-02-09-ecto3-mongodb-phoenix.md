@@ -484,8 +484,6 @@ solutions.
 # Proposal
 
 It would be great if there were something akin to Rails's Mongoid drivers
-in Elixir/Phoenix.
-
-I'd love to see a Mongoid-like driver for Phoenix. It would grab the
-best parts of Ecto (or be a branch) and provide handy features for dealing
-with the various times, dates, timesamps, ids etc., and embedded documents.
+in Elixir/Phoenix. It would grab the best parts of Ecto (or be a branch)
+and provide handy features for dealing with the various times, dates,
+timestamps, ids etc., and embedded documents.
