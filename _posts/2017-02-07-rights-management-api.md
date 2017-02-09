@@ -3,6 +3,7 @@ layout: post
 title: User and Permissions Management Service
 image:
 tags: [Elixir, Phoenix, Service]
+comments: true
 ---
 
 # Project Description

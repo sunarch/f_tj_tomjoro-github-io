@@ -3,6 +3,7 @@ layout: post
 title: It's Windows 3.1 All Over Again
 image:
 tags: [Elixir, Erlang, Functional programming, Rails, Node.js, Javascript, Go]
+comments: true
 ---
 
 Reactive programming and thread sharing.

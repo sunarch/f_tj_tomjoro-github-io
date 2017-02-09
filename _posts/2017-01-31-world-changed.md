@@ -3,6 +3,7 @@ layout: post
 title: Elixir - Erlang didn't change, the world did
 image: /img/mutation1.png
 tags: [elixir, erlang, functional programming, concurrent]
+comments: true
 ---
 
 I gave a presentation last week for the Elixir Finland meetup group where we talked about why Elixir is Different.

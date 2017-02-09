@@ -3,6 +3,7 @@ layout: post
 title: Phoenix with Ecto and MongoDb
 image:
 tags: [Elixir, Phoenix, Ecto2, MongoDb]
+comments: true
 ---
 
 How to use MongoDb with Phoenix and Ecto.
