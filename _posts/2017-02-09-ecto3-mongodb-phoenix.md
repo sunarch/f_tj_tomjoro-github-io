@@ -5,10 +5,7 @@ image:
 tags: [Elixir, Phoenix, Ecto2, MongoDb]
 ---
 
-I'll be updating this document. Please give me feedback and improvements.
-
-Version 1.0
-2017-02-09
+How to use MongoDb with Phoenix and Ecto. 
 
 ## Background
 
