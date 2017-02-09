@@ -5,22 +5,28 @@ image:
 tags: [Elixir, Phoenix, Ecto2, MongoDb]
 ---
 
-How to use MongoDb with Phoenix and Ecto. 
+How to use MongoDb with Phoenix and Ecto.
 
 ## Background
 
-Ecto 1.0 supported MongoDb. Ecto 2.0 & 3.0 don't. This has created a lot of confusion
-for developers who want to use MongoDb with Phoenix web applications. It's
-uncertain when, or if ever, MongoDb would be supported with Ecto >= 2
+Ecto 1.0 supported MongoDb, Ecto 2.0 & 3.0 don't. This has created a lot of confusion
+for developers who want to use MongoDb with Phoenix web applications.
+Don't downgrade to earlier versions of Ecto because you want to use MongoDb
+with Phoenix! You can use the newest versions of Ecto with the MongoDb
+drivers with a small amount of code.
 
-Also, there's not too much information explaining what's the best strategy.
+This strategy lets you use many of Ecto's cool features, like Changesets,
+and also directly using the MongoDb driver. This might sound
+hacky, but it is not. The MongoDb drivers (thanks @ericmj and all) are really
+excellent quality, and if you have used MongoDb from Ruby or Javascript then
+you'll find this makes a lot of sense.
 
 In this blog you will learn:
 
-* MongoDb works great with Elixir and Phoenix,
-* It's not difficult, there are some nice ways to do it,
-* How to do it,
-* Example code for the most comment questions,
+* How to use the MongoDb drivers with Elixir, Phoenix, and Ecto,
+* How to use Ecto 2 and 3 with the MongoDb drivers,
+* Example code,
+* Snippits to help you get started.
 
 ## Strategy
 
