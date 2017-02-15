@@ -111,3 +111,39 @@ Elixir/Phoenix provides some great tools to implement a command-event and
 process backed cache, as well as web sockets. I've been researching and developing
 collaborative applications for years and understand the challenges of creating
 scalable and robust applications with guaranteed consistent views for all users.
+
+# Database schema
+
+* User creates a projects.
+* A user can be a member of a project.
+* A user can be a member of a team.
+* A user can be an admin member of an organization.
+* A team can be a member of a project.
+* A team is owned by an organization.
+* An organization can own a project.
+
+* A user can directly add any other user to be a member of a project.
+* An organization owning a project overrides the user's ownership (but creator still exists).
+* A user with organization membership means that the user can create a project owned by the organization and
+can be a member of any team owned by the organization.
+* A project that is owned by an organization means any organization user can be invited.
+* A project can only have teams that are owned by the same organization.
+* A project that is not owned by an organization means that teams cannot be added.
+* A user with admin member of an organization can add members to the organization.
+
+* A user's dashboard shows any project they are a member of.
+* A user can be both directly a member of a project, or indirectly via a team.
+* Separate admin dashboard shows all projects owned by organization,
+all user who are members, all teams owned by organization.
+
+It is possible to have any team from any organization belong to a project but
+it is usually not the intention.
+
+A non-organization user could be added to an organization owned team, but
+it is usually not the intention.
+
+If a user is removed from organization, they should be removed from all
+organization's teams also.
+
+
+![Schema]({{ site.url }}/img/user_management.png)
