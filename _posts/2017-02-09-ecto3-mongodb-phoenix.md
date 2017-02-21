@@ -8,6 +8,28 @@ comments: true
 
 How to use MongoDb with Phoenix and Ecto.
 
+This might sound confusing:
+
+* Use newest version of Phoenix
+* Use newest version of Ecto
+* Don't use mongodb_ecto! Instead use the newest version of mongodb driver (mongodb).
+
+This post explains techniques on how to leverage some of the features from Ecto,
+like Changesets, but directly with the Mongodb driver. They work well together!
+
+Also this post shows you how to use MongoDb driver. There's not much documentation
+available on the mongodb driver site. This post shows you how to do things like
+indexes, and find, and updates with $set, etc.
+
+## Get started
+
+How to start a project:
+
+1. Create a new Phoenix project without a database specified. Ecto is included by
+default.
+1. Now, adjust the mix, etc, by adding directly the mongodb driver.
+1. Follow the other instructions in this post about startup, etc.
+
 ## Background
 
 Ecto 1.0 supported MongoDb, Ecto 2.0 & 3.0 don't. This has created a lot of confusion
@@ -16,7 +38,7 @@ Don't downgrade to earlier versions of Ecto because you want to use MongoDb
 with Phoenix! You can use the newest versions of Ecto with the MongoDb
 drivers with a small amount of code.
 
-This strategy lets you use many of Ecto's cool features, like Changesets,
+This post's strategy lets you use many of Ecto's cool features, like Changesets,
 and also directly using the MongoDb driver. This might sound
 hacky, but it is not. The MongoDb drivers (thanks @ericmj and all) are really
 excellent quality, and if you have used MongoDb from Ruby or Javascript then
@@ -470,6 +492,18 @@ as atoms, even if you have string keys.
 Otherwise resort to walking the Map and getting it all fixed. There
 are examples in Phoenix on how to Enum a Map and convert atoms to strings
 and vice-versa.
+
+## Some notes
+
+Thanks friends for posting comments. There were actually a bunch of things I forgot
+to mention.
+
+* remove the mongodb_ecto from the `mix.exs` and then add the elixir mongodb driver as I've shown above.
+* You can delete Repo.ex since you won't need it.
+* Make sure you add the startup code above in my_app.ex. (note: Don't start (remove) MyApp.Repo!)
+* You also can remove `Ecto.Adapters.SQL.Sandbox` stuff from test/support/conn_case.ex, etc.
+* For tests I just use delete_many before (or after) I setup a test since there is no transaction feature in Mongodb anyways. (the database is set to test and started automatically if you follow my instructions above).
+
 
 ## Conclusion
 
