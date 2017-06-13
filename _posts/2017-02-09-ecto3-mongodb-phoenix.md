@@ -15,7 +15,7 @@ This might sound confusing:
 * Don't use mongodb_ecto! Instead use the newest version of mongodb driver (mongodb).
 
 This post explains techniques on how to leverage some of the features from Ecto,
-like Changesets, but directly with the Mongodb driver. They work well together!
+e.g. Changesets, but directly with the Mongodb driver. They work well together!
 
 Also this post shows you how to use MongoDb driver. There's not much documentation
 available on the mongodb driver site. This post shows you how to do things like
