@@ -39,7 +39,7 @@ Reactive programming has these characteristics:
 # Present Day and Reactive Programming
 
 Operating systems are built around processes for reliability. Each (user mode) process is protected
-has it's own memory and should not crash the entire system. Threads run concurrently but share memory.
+has its own memory and should not crash the entire system. Threads run concurrently but share memory.
 That's the main different between a process and thread in a nutshell.
 
 So, why the need for Node.js and 'reactive' style programming? Node.js works just like Windows 3.1. There is an event loop,
@@ -115,8 +115,8 @@ If we wanted to do this in Elixir it would work like this:
   50 GOTO 20
 ```
 
-I remember an article (where is it) that showed that on Java using blocking threads was faster or basically
-equivalent to Non-blocking I/O for most "things". But that was up to 10K connections and
+I remember an article (where is it?) that showed that on Java using blocking threads was faster or basically
+equivalent to non-blocking I/O for most "things". But that was up to 10K connections and
 processors were slower back then. Nowadays we have to do much better!
 
 # Starting Multiple Processes
@@ -151,7 +151,7 @@ thread, is primarily for performance reasons. But watch of for nasty problems, l
 remember that you can't do anything expensive in that callback or other things will stop
 that share the same thread.
 
-Try as much as you can, anything that can get stuck.
+Try as much as you can, anything that can get stuck will get stuck.
 Maybe it's something as simple as a log statement, for example, the logger is now blocked
 writing to a file. The synchronous version worked in tests, but now something happened in
 production, the permissions were wrong, a backup has locked a file, etc., and
@@ -196,14 +196,14 @@ interface would pause if is a single threaded user interface. Don't do that.
 But that's because the user interface is typically implemented as a single
 resource, and it makes sense for it to be synchronous.
 
-In Elixir (thanks to Erlang) yo have true pre-emptive multi-tasking, and processes
+In Elixir (thanks to Erlang) you have true pre-emptive multi-tasking, and processes
 are efficient and inexpensive. You don't have to think about where
 to break up your code because of long-running tasks etc. And an errant processes
 can simply be shut down and restarted without taking down the entire system.
 
 In Elixir most I/O functions block, so your code stays sequential. If you don't
 want to wait, then don't. Why might you not want to wait? Maybe you want to start
-2 or 3 things in parallel, or maybe there something useful you can do before
+2 or 3 things in parallel, or maybe there is something useful you can do before
 you get your result from the blocking function, or maybe you are drawing
 a user interface and don't want it to pause.
 
@@ -232,9 +232,9 @@ process and give control to another process even though it would have been more 
 But this is all about fairness. Erlang wants all processes to play nicely, so
 no one process is allowed to hog the system.
 
-Erlang (the VM) basically _is an operating system_: it is the scheduler. It is a very
+Erlang (the VM) basically _is an operating system_: it is the scheduler. It is very
 difficult to make your own fair scheduler. Most languages won't even try, and instead
-rely on the native threads and processes. And Javascript resort sto 'thread-sharing' when
+rely on the native threads and processes. And Javascript resorts to 'thread-sharing' when
 this performance is not good enough. Take a look at the Erlang scheduler and you
 see how difficult it is, and how elegantly Erlang solves this - from 30 years
 of experience!
@@ -265,13 +265,13 @@ application often outperformed pre-emptive systems of the day!_
 Languages like Elixir offer both fully pre-emptive sequential programming
 (and are functional too), performance and protection. You get to focus on
 making your algorithms and logic, and not the scheduling - let the scheduler
-do the scheduling and you get on with on with your program. Wait if you want
+do the scheduling and you get on with your program. Wait if you want
 to, or don't wait if you don't want or don't need to - take your pick.
 This is a joy to a programmer (or coder as we call them nowadays).
 
 Event based programming is good, and is useful in a lot of situations.
 However, using it to share a thread because of the expense of having a thread is
-conflating the two concepts. If you afraid of concurrency primitives, and
+conflating the two concepts. If you are afraid of concurrency primitives, and
 you want concurrency you'll be better served by Go. _That's why I see Go
 as mainly an alternative to Javascript_ Go provides a much safer way to
 do concurrency, but it still uses shared threads via Goroutines.
