@@ -30,7 +30,7 @@ What's mutation anyways? Maybe a little example for those of you who haven't tri
 
 ![Ruby]({{ site.url }}/img/ruby.png)
 
-This is a Ruby snipped where I create an object, define a little hash with a and b, and then call a do_something method on the Fancy object. The question is: "What is the value of the hash after you call do_something"?
+This is a Ruby snippet where I create an object, define a little hash with a and b, and then call a do_something method on the Fancy object. The question is: "What is the value of the hash after you call do_something"?
 
 The answer is, of course, you don't know because in order to answer this you'd need to look at the code in Fancy. And if do_something changes hash, then this is what we call a mutation and a side-effect.
 
@@ -39,7 +39,7 @@ Now, if we use a language that does not have mutation, like Elixir, we'd be able
 
 This doesn't even make sense. the "hash" is there, and once declared it can never change. No need to go looking anywhere elsewhere, do_something simply cannot change that hash. Very safe and understandable. This may seem to be a small difference, but the difference is huge when you consider concurrent programs - you can safely pass the hash by copying it to another process. And that's why immutable data structures are a good fit for concurrency.
 
-Regarding threads: we're only human, sometimes we forget a mutex and a thread gets dies. Or maybe you don't "use" threads, but rather rely on Rails, etc. to provide them for you. Which works fine until you try to do something concurrent. Maybe you don't understand the threading model, and use a global variable, etc.
+Regarding threads: we're only human, sometimes we forget a mutex and a thread dies. Or maybe you don't "use" threads, but rather rely on Rails, etc. to provide them for you. Which works fine until you try to do something concurrent. Maybe you don't understand the threading model, and use a global variable, etc.
 
 ## Comparing the language guns
 
@@ -74,7 +74,7 @@ So what happened? The world changed, and continues to change:
 * Reliable code, not just features, differentiates,
 * Scalability is standard, and not special.
 
-Elixir brings Erlang to the masses. At it's core, Elixir's strength is Erlang. Elixir brings great libraries, and tools support, and wraps it all up in a very modern offering. I put Elixir's creation date on this chart just before the "Elixir is practical" line crosses the "Programmers who believe" line. And really, that's exactly what the core Elixir team did when they created Elixir - they saw the world changing around them, and they reached for something that would seemed perfect for the job - Erlang.
+Elixir brings Erlang to the masses. At it's core, Elixir's strength is Erlang. Elixir brings great libraries, and tools support, and wraps it all up in a very modern offering. I put Elixir's creation date on this chart just before the "Erlang is practical" line crosses the "Programmers who believe" line. And really, that's exactly what the core Elixir team did when they created Elixir - they saw the world changing around them, and they reached for something that would seemed perfect for the job - Erlang.
 
 So, now we're at the tipping point in 2017, and unlike most languages that struggle upwards on the adoption curve, there is already a large pent-up-demand for Elixir. And combine that with Erlang's mature platform and extensive libraries and you understand why coders like me are excited. These factors together will drive rapid adoption. And Erlang is not a here-today-gone-tomorrow technology - it is here to stay. You probably already use something developed in Erlang everyday and just don't realize it.
 
@@ -97,7 +97,7 @@ So, where's this leading? To this: programming in Elixir/Erlang is safer. It res
 
 When something does go wrong (which still can happen of course, and does!), there is a sophisticated layer of error handling, reporting and recovering to back you up. I like to think of it as safety first, with well rehearsed rapid responding emergency services (OTP).
 Uses pattern matching and other constructs to make coding more declarative, in order to make the intent clearer, and easier to understand.
-I could go on all day about the cool stuff, like the how sweet the pre-emptive scheduler is, how the processes work, the compiler, etc, but it I will sound like a raving madman. Maybe you should just go and try it for yourself. [Elixir Language Website](http://elixir-lang.org)
+I could go on all day about the cool stuff, like the how sweet the pre-emptive scheduler is, how the processes work, the compiler, etc, but it will sound like a raving madman. Maybe you should just go and try it for yourself. [Elixir Language Website](http://elixir-lang.org)
 
 # Conclusion
 
