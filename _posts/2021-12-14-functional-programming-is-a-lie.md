@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Tate.me
+title: Functional Programming Is a Lie
 image:  /img/mutation1.png
 tags: [Functional Programming, Elixir]
 ---
