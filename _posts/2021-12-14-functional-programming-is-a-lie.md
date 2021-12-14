@@ -45,3 +45,5 @@ So, in the Erlang view of the world, you program with local immutable state in p
 I think a lot of developers with experience in pure functional languages might be surprised with Elixir because it looks like an imperative language! In that regard I agree - simple imperative constructs are easier to understand. And we can make simple code because we can use processes as first-class citizens and having immutable state - which feels like a perfect analogy to the real world.
 
 The most important thing (now) in the future will be _reliability_ and the way to make reliable programs is to make programs that both humans and computers can understand and work in the real world (which is distributed in space and time).
+
+(c) 2021 Thomas O'Rourke
