@@ -68,7 +68,7 @@ In this drawing, x had an assigned value of 25 and after calling f(x) the output
 
 Of these three statements, mutation is the hardest one to understand because the black box can no longer be treated as a black box - it can affect the outside world. We must look into the black box to understand what it did to x. 
 
-# Mutation and Global State Are Lies
+# Mutation is a Lie
 
 The real world is immutable. Real computer systems are immutable. 
 
@@ -84,7 +84,7 @@ So, in the Erlang/Elixir view of the world, you program with local immutable sta
 
 Interestingly, the decision to have immutability in Erlang was not actually necessary. Processes could have had local mutable state without breaking the premise of actors, i.e. that actors have their own state and only communicate with the outside world by either sending or receiving messages. The decision to use immutability exclusively (you can't mutate) in the langauge was done for reliability - again so both humans and computers could understand and execute efficently respectively, for example local function calls and remote function calls have the same guarantees of immutability.
 
-# Mutation is a Lie
+# Imperative is Simpler
 
 I think a lot of developers with experience in pure functional languages might be surprised with Elixir because often the code looks like an imperative language! Here's an example:
 
