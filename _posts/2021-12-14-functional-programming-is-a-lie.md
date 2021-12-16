@@ -28,7 +28,7 @@ I’d agree that _pure_ functional languages are not very practical, but don't t
 
 You can do functional programming in many languages, for example Javascript is very functional. However, Javascript also has mutation which it has in common with most other "practical" languages like Java, Go, C++, C#, Ruby, Python, Rust, etc. But there are a _few_ languages that are in a different category: not-pure (allow side-effects), immutable, and functional.
 
-Elixir is the most widely used computer language that is 1) functional, 2) does not allow any mutation, and 3) allows for side effects. That'a a bit of a hidden joke because I really don't know any other languages in this category -  maybe readers of this Blog can help me out. However, just because Elixir might be unique in these regards - it's still a very practical language and is widely used (arguably).
+Elixir is the most widely used computer language that is 1) functional, 2) does not allow any mutation, and 3) allows for side effects. That'a a bit of a hidden joke because I really don't know any other languages in this category -  maybe readers of this Blog can help me out. And that just because Elixir might be unique in these regards that doesn't mean it's not a practical language (it is), nor that it is not widely used (it is).
 
 # Mutation
 
@@ -111,9 +111,9 @@ So, while I agree that imperative code is easier to understand (for humans), I j
 
 I know this seems completely backwards compared to most languages -  but that doesn't mean it's not correct. The world is changing and languages like Erlang & Elixir which might have historically been impractical in many contexts, have suddenly become relevant and practical (Why? See my other Blog "The World Changed..." Hint: distributed and parallel are no longer special cases.)
 
-So, there is some middle ground between pure-functional languages like Haskell and mainstream mutable state languages like Go, Java, etc.: this middle ground is Elixir, and it doesn't require a large philisophical shift - coming from either direction.
+So, there is some middle ground between pure-functional languages like Haskell and common mutable state languages like Go, Java, etc.: this middle ground is Elixir, and it doesn't require a large philisophical shift coming from either direction. This is what drives the continued growth of Elixir.
 
-We can make simple reliable programs when using processes as first-class citizens and having immutable state - which to me feels like a perfect analogy to the real world.
+We can make simple reliable programs when using processes as first-class citizens and having immutable state - which to me feels like a perfect analogy to the real world. 
 
 # Space and Time 
 
