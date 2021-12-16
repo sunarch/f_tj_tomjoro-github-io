@@ -84,7 +84,7 @@ So, in the Erlang/Elixir view of the world, you program with local immutable sta
 
 Interestingly, the decision to have immutability in Erlang was not actually necessary. Processes could have had local mutable state without breaking the premise of actors, i.e. that actors have their own state and only communicate with the outside world by either sending or receiving messages. The decision to use immutability exclusively (you can't mutate) in the langauge was done for reliability - again so both humans and computers could understand and execute efficently respectively, for example local function calls and remote function calls have the same guarantees of immutability.
 
-# Simplicity
+# Mutation is a Lie
 
 I think a lot of developers with experience in pure functional languages might be surprised with Elixir because often the code looks like an imperative language! Here's an example:
 
