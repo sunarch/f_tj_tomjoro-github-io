@@ -1,42 +1,57 @@
 ---
 layout: post
-title: Functional Programming Is a Lie
+title: Is Functional Programming Is a Lie? 
 image:  /img/blog_function.png
 tags: [Functional Programming, Elixir]
 ---
 
-# Functional Programming Is a Lie
+# Background
 
-Recently I read some articles with catchy tag-lines like: Pure Functional Programming is a Lie, Functional Programming is not Real, etc.
+Recently I read some articles with catchy headlines like: Pure Functional Programming is a Lie, Functional Programming is not Real, etc.
 
 A deeply philosophical statement posed more as a question, and something I’ve pondered now and then - especially since I started using Erlang/Elixir, which will become apparent :)
 
-The premise of these articles is that pure functional programming don't sufficiently represent what happens in a real world, or rather in the real world as realized by computers and therefore pure functional programming is a lie. Basically concluding that although programming in pure functional programming makes mathematical sense, in practical situations they can become overly complex and difficult to understand.
+Given that these articles are often written by experts, i.e. developers or computer scientist who have years of experience in pure functional programming (Haskell mainly) and have often been strong advocates - I wonder why the change of heart? 
+
+Is this a case of "if you can't beat 'em, join 'em"? - If I must work in an impure language such as Go, Java, Javascript, Ruby, Python, etc. then do I need a philosophical justification for this change (so I don't feel like I have just given up and followed the crowd).
+
+
+# Functional Programming is a Lie
+
+The premise of these articles is that pure functional programming doesn't sufficiently represent what happens in a real world; the real world being as realized by computers. And therefore pure functional programming is a lie. Basically concluding that although programming in pure functional programming makes mathematical sense, in practical situations they can become overly complex and difficult to understand.
 
 The argument is made that real computers have state, i.e. you store things in memory locations. The value 42 is stored somewhere in memory, maybe at adress 0x10000000. And so I can update and change that value by replacing 42 with 43 and now the value 43 is at 0x10000000 (mutation). In pure functional programming values don't magically change - they stay the same and only functions produce results (immutable). Specially, the argument is that real computers have mutable state, so therefore programming languages should have mutable state. 
 
-Given that these articles are often written by experts, i.e. developers or computer scientist who have years of experience in pure functional programming and have often been strong advocates - I wonder why the change of heart? 
+I don't know why it's important for a programming language to actually represent how they are implemented in physical computers. As far as I am concerned our goal as programmers is primarily to write programs that both humans and computers can understand and that work reliably. _Reading bewteen the lines: obviously I do care otherwise I wouldn't have written this blog._
 
-Is this a case of "if you can't beat 'em, join 'em"? - If I must work in an unpure language such as Go, Java, Javascript, Ruby, Python, etc. then I need a deep philosophical justification for this change so I don't feel like I have just followed the crowd. 
+I’d agree that _pure_ functional languages are not very practical, but don't throw the baby out with the bathwater. Just because you drop the "pure" part of "pure functional programming" doesn't mean you should give up an all the tennants (immutability, substitution (no side effects), first-class functions, etc.) _The definition of "pure" is difficult, but generally pure functional languages do not allow for side effects (in addition to all the other "functional" things)._
 
-I don't know why it's important for a programming language to actually represent how they are implemented in physical computers. As far as I am concerned our goal as programmers is firstly to write programs that both humans and computers can understand and that work reliably. _Obviously I do care otherwise I wouldn't have written this._
+You can do functional programming in many languages, for example Javascript is very functional. However, Javascript also has mutation which it has in common with most other "practical" languages like Java, Go, C++, C#, Ruby, Python, Rust, etc. But there are a _few_ languages that are in a different category: not-pure (allow side-effects), immutable, and functional.
 
-I’d agree that _pure_ functional languages are not very practical, but don't throw the baby out with the bathwater. Just be cause you drop the "pure" part of "pure functional programming" doesn't mean you should give up an all the tennants (immutability, substitution (no side effects), first-class functions, etc.)
+Elixir is the most widely used computer language that is 1) functional, 2) does not allow any mutation, and 3) allows for side effects. That'a a bit of a hidden joke because I really don't know any other languages in this category -  maybe readers of this Blog can help me out. However, just because Elixir might be unique in these regards - it's still a very practical language and is widely used (arguably).
 
-You can do functional programming in many languages, for example Javascript is very functional. However, Javascript also has mutation which it has in common with most other "practical" languages (Java, Go, C++, C#, Ruby, Python, Rust, etc.). But there are a _few_ languages that are in a different category: not-pure, immutable and functional (and are widely used and practical).
+# Mutation
 
-# Mutation and Immutable
-
+This Blog is not about X-Men, but we do talk a lot about x.
 
 Reliable programming languages (and even languages that have mutable constructs) use immutability to make programs easier to understand for both humans and computers.
 
-For a primer: here's an example of immutable in action:
+For a primer: here's an example of immutable in action in Elixir:
 ```
   map = %{test: 1}
   Map.put_new(map, :fun, 2)
   IO.inspect map   
 
-  # Output: %{test: 1} 
+  # Output: %{test: 1} -- the value of map did not change, but rather 'Map.put_new' returned a new Map (which we stupidly ignored) 
+```
+
+This is how can do it:
+```
+  map = %{test: 1}
+  map1 = Map.put_new(map, :fun, 2)
+  IO.inspect map1   
+
+  # Output: %{test: 1, fun: 2} -- Note, we could have reused the name "map", but don't confuse that with mutation 
 ```
 
 Making this discussion as simple as I can: 
@@ -101,5 +116,9 @@ We can make simple reliable programs when using processes as first-class citizen
 The most important thing (now) in the future of programming (is) will be _reliability_ and the way to make reliable programs is to make programs that both humans and computers can understand and that work reliably in the real world  - and the real world is distributed in _time_ and _space_).
 
 So, it feels like this philosophy fits my Dr. Whovian view of the world prefectly - where did I leave my Tardis.
+
+# Disclaimer
+
+Just to set the record straight - Haskell is cool, Go is nice, I love Ruby, C++ is efficient, C# is handy, Java is solid, Rust makes sense, etc. - I've been programming for over 40 years and it's not my intention to bash on other languages - Elixir is differerent (See my Blog) and comparisons that evoke emotions promote thinking and discussion :) 
 
 (c) 2021 Thomas O'Rourke
