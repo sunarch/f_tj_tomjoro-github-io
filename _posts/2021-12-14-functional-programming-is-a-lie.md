@@ -63,10 +63,10 @@ Making this discussion as simple as I can:
 In this drawing, x had an assigned value of 25 and after calling f(x) the output was 5. Possibly this function computes the square root, but we can't know because it's a black box. 
 
 * In a pure functional language, x being 25 will always give 5 as an output. (in fact the whole thing can be susbtituted for the output)
-* In a unpure functional language (one that allows side effects), sometimes 25 comes out as and maybe other times it comes out as 3.1415. This is called a side effect. (for example getTime() will always yeild a different result)
-* In a language with mutation, sometimes 25 comes out 3.1415 and _sometimes x is magically changed to 52_ 
+* In a "impure" functional language (one that allows side effects), sometimes when I put 25 in, the output might be 5 and maybe other times it comes out as 3.1415. This is called a having side effects. (for example getTime() will always yeild a different result)
+* In a language with mutation, sometimes 25 comes out 5 or 3.1415 and _sometimes x is might magically change to 52_ 
 
-Of these three statements, the mutation is the hardest one to understand. Because the black box can no longer be treated as a black box. We must look into the black box to understand what it did to x. 
+Of these three statements, the mutation is the hardest one to understand because the black box can no longer be treated as a black box - it can affect the outside world. We must look into the black box to understand what it did to x. 
 
 # Mutation and Global State Are Lies
 
