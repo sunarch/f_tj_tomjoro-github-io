@@ -103,15 +103,17 @@ Processes (and threads) were invented for two purposes:
 * To make it possible to write code simply and imperatively (for humans)
 * To make it possible to run more efficiently, concurrently or in parallel (for computers)
 
-In my previous blogs some readers have complained that I don't understand the difference between concurrent and parallel because I seem to use them interchangably - there's a reason. In Elixir there really is no difference between concurrent and parallel. Anything that is done with processes can either be run concurrently or in parallel (because of immutability!) - we leave it up to the scheduler to decide and by default just write everything in parallel by default, i.e. the question is "do I need the result of the last statement (expression) for the next statement (expression)". 
+In my previous blogs some readers have complained that I don't understand the difference between concurrent and parallel because I seem to use them interchangably - there's a reason. In Elixir there really is no difference between concurrent and parallel. Anything that is done with processes can either be run concurrently or in parallel (because of immutability!) - we leave it up to the scheduler to decide andjust write everything in parallel by default, i.e. the question is "do I need the result of the last statement (expression) for the next statement (expression)". 
 
 I digress. Anyways, the point here is that you can program imperatively in a functional language. In an imperative language code is executed from top to bottom, one statement (expression actually) after another. However, Elixir is functional and declarative!
 
 So, while I agree that imperative code is easier to understand (for humans), I just disagree that this implies that it requires mutable constructs.
 
-I know this seems completely backwards compared to most languages -  but that doesn't mean it's not correct. The world is changing and languages like Erlang & Elixir which might have historically been impractical in many contexts, have suddenly become relevant and practical (Why? See my other Blog "The World Changed..." Hint: distributed and parallel are no longer a special cases.)
+I know this seems completely backwards compared to most languages -  but that doesn't mean it's not correct. The world is changing and languages like Erlang & Elixir which might have historically been impractical in many contexts, have suddenly become relevant and practical (Why? See my other Blog "The World Changed..." Hint: distributed and parallel are no longer special cases.)
 
-We can make simple reliable programs when using processes as first-class citizens and having immutable state - which feels like a perfect analogy to the real world.
+So, there is some middle ground between pure-functional languages like Haskell and mainstream mutable state languages like Go, Java, etc.: this middle ground is Elixir, and it doesn't require a large philisophical shift - coming from either direction.
+
+We can make simple reliable programs when using processes as first-class citizens and having immutable state - which to me feels like a perfect analogy to the real world.
 
 # Space and Time 
 
