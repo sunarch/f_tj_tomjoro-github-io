@@ -45,7 +45,7 @@ For a primer: here's an example of immutable in action in Elixir:
   # Output: %{test: 1} -- the value of map did not change, but rather 'Map.put_new' returned a new Map (which we stupidly ignored) 
 ```
 
-This is how can do it:
+If our goal was to add something to a map, then we need to do this:
 ```
   map = %{test: 1}
   map1 = Map.put_new(map, :fun, 2)
@@ -66,7 +66,7 @@ In this drawing, x had an assigned value of 25 and after calling f(x) the output
 * In a "impure" functional language (one that allows side effects), sometimes when I put 25 in, the output might be 5 and maybe other times it comes out as 3.1415. This is called a having side effects. (for example getTime() will always yeild a different result)
 * In a language with mutation, sometimes 25 comes out 5 or 3.1415 and _sometimes x is might magically change to 52_ 
 
-Of these three statements, the mutation is the hardest one to understand because the black box can no longer be treated as a black box - it can affect the outside world. We must look into the black box to understand what it did to x. 
+Of these three statements, mutation is the hardest one to understand because the black box can no longer be treated as a black box - it can affect the outside world. We must look into the black box to understand what it did to x. 
 
 # Mutation and Global State Are Lies
 
@@ -83,6 +83,8 @@ Given this view, then one must accept that functions (and real systems) can have
 So, in the Erlang/Elixir view of the world, you program with local immutable state in processes. As a system you communicate with other processes (by sending messages) that also have local and immutable state  - but process have observable state, and so does the system. Another advantage of this is that a single process can be cleanly terminated at any time and guarantees that the system as a whole can continue to run predictably. Programming languages that have shared mutable state (Java, Go, Python, Ruby, C#, C++, etc.), or even the possibility to do use  “unsafe” constructs (Rust), (threads) cannot provide this guarantee.
 
 Interestingly, the decision to have immutability in Erlang was not actually necessary. Processes could have had local mutable state without breaking the premise of actors, i.e. that actors have their own state and only communicate with the outside world by either sending or receiving messages. The decision to use immutability exclusively (you can't mutate) in the langauge was done for reliability - again so both humans and computers could understand and execute efficently respectively, for example local function calls and remote function calls have the same guarantees of immutability.
+
+# Simplicity
 
 I think a lot of developers with experience in pure functional languages might be surprised with Elixir because often the code looks like an imperative language! Here's an example:
 
