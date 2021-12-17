@@ -1,21 +1,19 @@
 ---
 layout: post
-title: Is Functional Programming Is a Lie? 
+title: Is Functional Programming a Lie? 
 image:  /img/blog_function.png
 tags: [Functional Programming, Elixir]
 ---
 
-# Background
+_Most computer scientist were introduced to some amount Pure Functional Programming in school, and rapidly decided that while powerful, it was just too darn complex and impractical. Yet pure functional languages are used in the real world and solve very difficult problems!_
 
-Recently I read some articles with catchy headlines like: Pure Functional Programming is a Lie, Functional Programming is not Real, etc.
-
-A deeply philosophical statement posed more as a question, and something I’ve pondered now and then - especially since I started using Erlang/Elixir, which will become apparent :)
-
-Most of these articles are often written by experts, i.e. developers or computer scientist who have years of experience in pure functional programming (Haskell mainly) - I wonder where the disillusionment is coming from.
+Recently I read some articles with catchy headlines like: Pure Functional Programming is a Lie, Functional Programming is not Real, etc. -- what's reality got do do with it? Some of these articles are often written by experts, i.e. developers or computer scientist who have years of experience in pure functional programming (Haskell mainly) - I wonder where the disillusionment is coming from.
 
 Statements like this: In the real world computers have mutable state, so trying to program without mutable state goes against the natural order of things and makes programming difficult.
 
-Smart people (developers) need justification for their (langauage) decision - it can't just be "follow the crowd", or "it's easier". But do we really need to bring _reality_ into the discussion? Software development is anything but real.
+Smart people (developers) need justification for their (langauage) decision - it can't just be "follow the crowd", or "it's easier". But do we need to bring _reality_ into the discussion? Software development is anything but real.
+
+I've thought about this question sometimes -  especially since I started using Elixir (5 years now) trying to build a mental framework for categorizing languages.
 
 ## Functional languages and Pure functional languages
 
