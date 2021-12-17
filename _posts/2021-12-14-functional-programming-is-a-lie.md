@@ -5,9 +5,7 @@ image:  /img/blog_function.png
 tags: [Functional Programming, Elixir]
 ---
 
-_Most computer scientist were introduced to some amount Pure Functional Programming in school, and rapidly decided that while powerful, it was just too darn complex and impractical. Yet pure functional languages are used in the real world and solve very difficult problems!_
-
-Recently I read some articles with catchy headlines like: Pure Functional Programming is a Lie, Functional Programming is not Real, etc. -- what's reality got do do with it? Some of these articles are often written by experts, i.e. developers or computer scientist who have years of experience in pure functional programming (Haskell mainly) - I wonder where the disillusionment is coming from.
+Recently I read some articles with catchy headlines like: Pure Functional Programming is a Lie, Functional Programming is not Real, etc. -- what's reality got do do with it? Some of these articles are often written by experts, i.e. developers or computer scientists who have years of experience in pure functional programming - I wonder where the disillusionment is coming from.
 
 Statements like this: In the real world computers have mutable state, so trying to program without mutable state goes against the natural order of things and makes programming difficult.
 
