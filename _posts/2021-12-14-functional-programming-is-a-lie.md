@@ -141,7 +141,7 @@ If time is real, it also prevents us from know the state of the entire world at 
 
 If you accept distribution then you just have to accept side-effects, because state is going to change in other "parts" for reasons unbeknownst to our local reference. Introducing side effects means you can no longer use mathematical descriptions of the entire system (relativity - very Einstein)! What are these "parts", or local references?
 
-In the Erlang/Elixir these independent "parts that each have their own immutable state are processes. Process have observable state, which can be observed from the outside by sending a message to the process and asking it for the state and the process in turn sending you a response. Each process is a consistent world unto itself and has nothing shared with other processes.
+In the Erlang/Elixir these independent "parts" that each have their own local and immutable state are *processes*. Processes have observable state, which can be observed from the outside by sending a message to the process and asking it for the state and the process in turn sending you a response. Each process is a consistent world unto itself and has nothing shared with other processes.
 
 This matches the real world - If you can’t know what’s happening somewhere else - then state must be communicated to be known. _This is especially true nowadays as computing has become increasingly distributed and parallel even on a small scale. For example, in multi-core computers each core has it's own dedicated cached memory and so getting a value from another core requires requesting it and copying._
 
@@ -190,7 +190,6 @@ Erlang (and therefore Elixir) wasn't designed to be an accurate representation o
 * Reliable programs have predictable and consistent behavior (scheduler, memory management, etc.)
 * Scaling is a bonus because simple composed independent components also scale better in many cases (nowadays)
 * etc.
-
 
 
 # Disclaimer
