@@ -186,13 +186,18 @@ Giving this category a name is difficult and it's referred to in many different 
 
 Why?
 
-Erlang (and therefore Elixir) wasn't designed to be an accurate representation of physical computers, or to be mathematically provable, or scalable, or versatile, or even being friendly and fun for programmers - its first and foremost goal was to be reliable. Every decision about the language as it evolved was driven by this concern: 
-* Reliable programs are simple and understandable,
-* Reliable systems are built from simple independent (possibly distributed) parts that are composed, 
-* Reliable programs have predictable and consistent behavior (scheduler, memory management, etc.)
-* Scaling is a bonus because simple composed independent components also scale better in many cases (nowadays)
+Erlang (and therefore Elixir) wasn't designed to be an accurate representation of physical computers, or to be mathematically provable, or scalable, or versatile, or fast, or even friendly and fun for programmers - its first and foremost goal was to be reliable. Every decision about the language (and execution environment) as it evolved was prioritized by reliability, 
+
+Reliable software:
+* is simple and understandable,
+* is built from simple independent (possibly distributed) parts that are composed, 
+* has predictable and consistent behavior (scheduler, memory management, etc.),
+* is secure,
+* is maintainable,
+* scales - scaling is a bonus because simple composed independent components also scale better in many cases (nowadays)
 * etc.
 
+To be clear: I belive reliability is the most important criteria in a computer language. Of course, developers still need to write good reliable code - but reality (reality again?) is that we are only human and make mistakes. 
 
 # Disclaimer
 
