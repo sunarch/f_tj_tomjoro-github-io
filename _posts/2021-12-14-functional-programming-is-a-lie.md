@@ -7,9 +7,9 @@ tags: [Functional Programming, Elixir]
 
 Recently I read some articles with catchy headlines like: Pure Functional Programming is a Lie, Functional Programming is not Real, etc. -- what's reality got do do with it? Some of these articles are often written by experts, i.e. developers or computer scientists who have years of experience in pure functional programming - I wonder where the disillusionment is coming from.
 
-This seems to be their conclusion: _In the real world computers have mutable state, so trying to program without mutable state goes against the natural order of things and makes programming difficult._
+This seems to be their conclusion: _In the real world computers have mutable state, so trying to program without mutable state goes against the natural order of things and makes programming difficult and makes execution of those programs by real computers more difficult_
 
-Smart people (developers) need justification for their (langauage) decision - it can't just be "follow the crowd", or "it's easier". But do we need to bring _reality_ into the discussion? Software development is anything but real.
+Some developers feel the need for deeper justifications when choosing a computer language - it can't just be "follow the crowd", or "it's easier to find examples". But do we need to bring _reality_ into the discussion? 
 
 And are there really only 2 choices? Either we reject mutability and program in a pure functional language, or we just accept mutable reality and join the crowd? 
 
@@ -131,7 +131,9 @@ And this is confirmed historically - original computer memories were things like
 
 ![Elixir]({{ site.url }}/img/flipflop.png)
 
-You don't have to understand this diagram, but notice how the lines feedback on themselves. This is recursion in time. There's all the proof you need: state arises from recusion in time :)
+You don't have to understand this diagram, but notice how the lines feedback on themselves. This is recursion in time. There's all the proof you need: state arises from recusion in time :) . 
+
+And since computer memory is built with recursion, I don't see that computers have any difficulty in executing this.
 
 ## Distribution 
 
