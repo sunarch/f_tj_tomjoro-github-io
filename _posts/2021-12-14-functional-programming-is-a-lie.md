@@ -176,7 +176,7 @@ _This "style" of programming might have historically been impractical in many co
 
 # Is Pure Functional Programming a Lie?
 
-Back to the original question: Is pure functional programming a lie?  Yes it is a lie, but not because of immutability being unreal, but because time exists in the real world. 
+Back to the original question: Is pure functional programming a lie? Saying pure functional programming is a lie is like saying math is a lie. It's not a lie, but it doesn't always map well to the real world of computers -  but that's not because of immutability, but instead stems from not taking time and distribution into account.
 
 # Elixir's Category 
 
