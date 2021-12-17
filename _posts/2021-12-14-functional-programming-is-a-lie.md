@@ -17,7 +17,7 @@ I've thought about this question sometimes, especially since I started using Eli
 
 ## Functional languages and Pure functional languages
 
-Javascript is a functional language. Why isn't it a "pure" functional language. 
+Javascript is a functional language. Why isn't it a "pure" functional language? 
 
 Pure functional languages, e.g. Haskell, F#, OCaml, are typically descendants of Lisp. Back in the early days of computer science, a lot of work was done to try to use math to prove program correctness. Think about that - it would mean that when you delivered your program to a customer you could say "this is provably correct so there cannot be any bugs by definition", unlike today when we say "it has 80% test coverage and worked when I tried it" ;) 
 
