@@ -184,8 +184,6 @@ There is some middle ground, a category, between *pure-functional languages* and
 
 Giving this category a name is difficult and it's referred to in many different ways: is it "impure functional with distrubted and immutable state" or "functional, dynamic, safe language", or ?. In my opinion the category Elixir is in should be called "Reliable Languages".
 
-Why?
-
 Erlang (and therefore Elixir) wasn't designed to be an accurate representation of physical computers, or to be mathematically provable, or scalable, or versatile, or fast, or even friendly and fun for programmers - its first and foremost goal was to be reliable. Every decision about the language (and execution environment) as it evolved was prioritized by reliability, 
 
 Reliable software:
