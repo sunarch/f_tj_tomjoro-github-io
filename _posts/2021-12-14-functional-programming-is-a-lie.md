@@ -104,31 +104,35 @@ Of these three statements, mutation is the hardest one to understand because the
 
 In languages that have immutable state recusion is not somthing to avoid, rather it's the only way to loop. Recursion is seen as dangerous in many languages - but that's because they have mutation.
 
-# Mutation is a Lie
+# The Real World
 
-Remember the beer analogy, i.e. that the shelf has state, that computer memory has state.
+Remember the beer analogy, i.e. that the shelf has state, that computer memory has state?  
 
-Here's a shocker: _Mutation is not real_. The real world is _immutable_. Real computer systems are immutable.
+The real world is actually _immutable_. 
 
-How can this be true? It's because we forgot to consider _time_ and _distribution_ in our world view.
+How can this be? It's because we forgot to consider _time_ in our world view - and time does exist!
 
-_The real world is immutable when viewed at any point in time_ - the past can’t be changed. 
+The real world is immutable when viewed at any point in time
+* the past can’t be changed and 
+* state is only definable by observation (at a time).
 
-And there is no such thing as global state in the real world (you don’t know what’s happening somewhere else - it has to be communicated), or any computer system. _This is especially true nowadays as computing has become increasingly distributed and parallel (multi-core systems which each have their own cache, memory, etc.)_ 
+And since time exists it also is impossible to know the state of the entire world, i.e. you can’t know what’s happening somewhere else - it has to be communicated. This is especially true nowadays as computing has become increasingly distributed and parallel even on a small scale. For example, in multi-core computers each core has it's own dedicated cached memory and so getting a value from another core requires requesting it and copying.
 
-Algorithms increasingly must be understood in the context of parallel multiprocessor/distributed systems. Entire books discuss algorithms and big O complexity without ever mentioning that all bets are off when you introduce parallelism because it becomes mathematically “difficult”. If one introduces threads sharing mutable state, it becomes basically intractable (see “The Problem with Threads” from Lee).
+State arises from recursion in time. When you look closely at how computer memories actually work, you can see this recursion _even at the level of the logic circuits that implement computer memory_
 
-State arises from recursion in time. Original computer memories were things like mecury delay lines, even CRTs, that simply repeatedly played back a signal put into them.  Here's a logic diagram of a flip-flop. A flip flop is a 1 bit computer memory and is how RAM is built in a _real_ computer.
+And this is confirmed historically - original computer memories were things like mecury delay lines, even CRTs, as recused and repeatedly played back a signal put into them. In the past this was more outwardly apparent, but now this recursion is hidden in logic circuits.
+
+ Here's a logic diagram of a flip-flop. A flip flop is a 1 bit computer memory and is how RAM is built in a _real_ computer.
 
 ![Elixir]({{ site.url }}/img/flipflop.png)
 
 You don't have to understand this diagram, but notice how the lines feedback on themselves. This is recursion in time. There's all the proof you need: state arises from recusion in time :)
 
-So, given that we have immutable, yet distributed, then you just have to accept side-effects, i.e. given same inputs a function can return different results. Introducing side effects means you can no longer use mathematical descriptions!
+If you accept that the world is immutable and distributed, then you just have to accept side-effects, because state is going to change in other "parts" for unknown reasons and will just have to accept that. Introducing side effects means you can no longer use mathematical descriptions of the entire system! What are these "parts"?
 
-In the Erlang/Elixir view of the world, you program with local immutable state in processes. Process have recusion so that they do have observable state. To know the state, you just have to send a message to the process and ask for what the current "state" is. Each process is a world unto itself and has nothing shared with other processes.
+In the Erlang/Elixir these independent "parts that each have their own immutable state are processes. Process have observable state, which can be observed from the outside by sending a message to the process and asking it for the state and the process in turn sending you a response. Each process is a consistent world unto itself and has nothing shared with other processes.
 
-The nice thing about this is that a single process can be cleanly terminated at any time and guarantees that the system as a whole can continue to run predictably. Programming languages that have shared mutable state cannot provide this guarantee.
+The nice thing about this is that processes can't interfere with other processes by definition, and hence can be cleanly terminated at any time. This in turn guarantees that the system as a whole can continue to run predictably regardless of the failure of individual parts. Programming languages that have shared mutable state, at any level and through any mechanism, cannot provide this guarantee. The only way to provide this guarantee is completely ban shared mutatable state (processes can only communicate by messaging).
 
 # Imperative is Simpler
 
