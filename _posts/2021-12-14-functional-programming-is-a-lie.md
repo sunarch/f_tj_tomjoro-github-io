@@ -55,8 +55,6 @@ I don't know why it's important for a programming language to actually represent
 
 I’d agree that _pure_ functional languages are not very practical, but don't throw the baby out with the bathwater. Just because you drop the "pure" part of "pure functional programming" doesn't mean you should give up an all the tennants (immutability, substitution (no side effects), first-class functions, etc.) 
 
-You can do functional programming in many languages, for example Javascript is very functional. 
-
 # Categories of purity
 
 There are three categories:
@@ -110,7 +108,7 @@ Of these three statements, mutation is the hardest one to understand because the
 
 Remember the beer analogy, i.e. that the shelf has state, that computer memory has state.
 
-Mustation is not real. The real world is _immutable_. Real computer systems are immutable.
+Here's a shocker: _Mutation is not real_. The real world is _immutable_. Real computer systems are immutable.
 
 How can this be true? It's because we forgot to consider _time_ and _distribution_ in our world view.
 
@@ -120,23 +118,23 @@ And there is no such thing as global state in the real world (you don’t know w
 
 Algorithms increasingly must be understood in the context of parallel multiprocessor/distributed systems. Entire books discuss algorithms and big O complexity without ever mentioning that all bets are off when you introduce parallelism because it becomes mathematically “difficult”. If one introduces threads sharing mutable state, it becomes basically intractable (see “The Problem with Threads” from Lee).
 
-State arises from recursion in time. Original computer memories were exactly this, delay lines, even CRTs that simply played back a state put into them.  Here's a logic diagram of a flip-flop. A flip flop is a 1 bit computer memory and is how RAM is built in a _real_ computer.
+State arises from recursion in time. Original computer memories were things like mecury delay lines, even CRTs, that simply repeatedly played back a signal put into them.  Here's a logic diagram of a flip-flop. A flip flop is a 1 bit computer memory and is how RAM is built in a _real_ computer.
 
 ![Elixir]({{ site.url }}/img/flipflop.png)
 
 You don't have to understand this diagram, but notice how the lines feedback on themselves. This is recursion in time. There's all the proof you need: state arises from recusion in time :)
 
-So, given that we have immutable, yet distributed state, then you just have to accept side-effects, i.e. given same inputs a function can return different results. A good example is get_time(). This function returns a different result each time you call it because it might be the result of an external system and not part of the local state -  Introducing side effects means you can no longer use substitution in a pure functional context.
+So, given that we have immutable, yet distributed state, then you just have to accept side-effects, i.e. given same inputs a function can return different results. Introducing side effects means you can no longer use mathematical descriptions!
 
-So, in the Erlang/Elixir view of the world, you program with local immutable state in processes. Process have recusion so that they do have observable state. To know the state, you just have to send a message to the process and ask for what the current "state" is. Each process is a world unto itself and has nothing shared with other processes.
+In the Erlang/Elixir view of the world, you program with local immutable state in processes. Process have recusion so that they do have observable state. To know the state, you just have to send a message to the process and ask for what the current "state" is. Each process is a world unto itself and has nothing shared with other processes.
 
-The nice thing about this is that a single process can be cleanly terminated at any time and guarantees that the system as a whole can continue to run predictably. Programming languages that have shared mutable state (Java, Go, Python, Ruby, C#, C++, etc.), or even the possibility to do use  “unsafe” constructs (Rust), (threads) cannot provide this guarantee.
-
-_Interestingly, the decision to have immutability in Erlang was not actually necessary. Processes could have had local mutable state even with processes. The decision to use immutability exclusively in Erlang (and hence Elixir) was done for reliability - again so both humans and computers could understand and execute efficently - local function calls and remote function calls have the same guarantees of immutability._
+The nice thing about this is that a single process can be cleanly terminated at any time and guarantees that the system as a whole can continue to run predictably. Programming languages that have shared mutable state cannot provide this guarantee.
 
 # Imperative is Simpler
 
-I think a lot of developers with experience in pure functional languages might be surprised with Elixir because often the code looks like an imperative language! Here's an example:
+A lot of developers might be surprised with Elixir because most of the code you see looks very imperative. In an imperative language code is executed from top to bottom, one statement (expression actually) after another. 
+
+For example:
 
 ```
 file = File.read!("my_file.txt")
@@ -147,29 +145,30 @@ Database.write(joined) #just an example
 IO.puts "done"
 ```
 
-If Elixir is functional, where are the callbacks, promises, awaits, etc? The answer is that in Elixir we don't care - I have no idea if File.read is asynchronous or synchronous and I don't care because I need the result of the file in order to start processing the returned strings from the file and that's all the matters. So we can write code simply and imperatively.
+If Elixir is functional, then where are the callbacks, promises, awaits, etc? In Elixir I don't care if File.read is asynchronous or synchronous - I need the result of the file read before I can do the next thing - and that's all the matters. So I can write code simply and imperatively. What enables this?
 
 Processes (and threads) were invented for two purposes: 
-* To make it possible to write code simply and imperatively (for humans)
+* To make it possible to write code simply and _imperatively_ (for humans)
 * To make it possible to run more efficiently, concurrently or in parallel (for computers)
 
-In my previous blogs https://tomjoro.github.io/2017-02-03-why-reactive-fp-sucks/ some readers have complained that I don't understand the difference between concurrent and parallel because I seem to use them interchangably - there's a reason. In Elixir there really is no difference between concurrent and parallel. Anything that is done with processes can either be run concurrently or in parallel (because of immutability!) - we leave it up to the scheduler to decide andjust write everything in parallel by default, i.e. the question is "do I need the result of the last statement (expression) for the next statement (expression)". 
+In my previous blogs https://tomjoro.github.io/2017-02-03-why-reactive-fp-sucks/ some readers have complained that I don't understand the difference between concurrent and parallel because I seem to use them interchangably - there's a reason. In Elixir there really is no difference between concurrent and parallel. Anything that is done with processes can either be run concurrently or in parallel (because of immutability!) - we write everything in parallel by default. 
 
-I digress. Anyways, the point here is that you can program imperatively in a functional language. In an imperative language code is executed from top to bottom, one statement (expression actually) after another. However, Elixir is functional and declarative.
+Imperative code is easier to understand and makes programs more reliable, but it's not the same as mutation.
 
-So, while I agree that imperative code is easier to understand (for humans), I just disagree that this implies that it requires mutable constructs.
+The world is changing and Erlang & Elixir which might have historically been impractical in many contexts, have suddenly become relevant and practical (Why? See my other Blog https://tomjoro.github.io/2017-01-31-world-changed/ _Hint: distributed and parallel are no longer special cases._
 
-I know this seems completely backwards compared to most languages -  but that doesn't mean it's not correct. The world is changing and languages like Erlang & Elixir which might have historically been impractical in many contexts, have suddenly become relevant and practical (Why? See my other Blog https://tomjoro.github.io/2017-01-31-world-changed/ _Hint: distributed and parallel are no longer special cases._
+# Elixir's Category 
 
-So, there is some middle ground between pure-functional languages like Haskell and common mutable state languages like Go, Java, etc.: this middle ground is Elixir - it doesn't require a complete change in your world view. I belive this is what drives the continued growth of Elixir, i.e. there is nothing else in the same category.
+There is some middle ground, a category, between pure-functional languages and impure languages with mutable state -- and that middleground is a category Elixir owns. I belive this is what drives the continued growth of Elixir. 
 
-We can make simple reliable programs when using processes as first-class citizens and having immutable state - which to me feels like a perfect analogy to the real world. 
+Why do I care? Because I care about reliability.
 
-# Space and Time 
-
-The most important thing (now) in the future of programming (is) will be _reliability_ and the way to make reliable programs is to make programs that both humans and computers can understand and that work reliably in the real world  - and the real world is distributed in _time_ and _space_.
-
-So, it feels like this philosophy fits my Dr. Whovian view of the world prefectly - now where did I leave my Tardis.
+Erlang (and therefore Elixir) wasn't designed to be an accurate representation of physical computers, or to be mathematically provable, or scalable, or versatile, or even being friendly and fun for programmers - its first and foremost goal was to be reliable. Every decision about the language as it evolved was driven by this concern: 
+* Reliable programs are simple and understandable,
+* Reliable systems are built from simple independent (possibly distributed) parts that are composed, 
+* Reliable programs have predictable and consistent behavior (scheduler, memory management, etc.)
+* Scaling is a bonus because simple composed independent components also scale better in many cases (nowadays)
+* etc.
 
 # Disclaimer
 
