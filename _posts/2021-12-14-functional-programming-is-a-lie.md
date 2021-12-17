@@ -155,17 +155,17 @@ Processes (and threads) were invented for two purposes:
 * To make it possible to write code simply and _imperatively_ (for humans)
 * To make it possible to run more efficiently, concurrently or in parallel (for computers)
 
-In my previous blogs https://tomjoro.github.io/2017-02-03-why-reactive-fp-sucks/ some readers have complained that I don't understand the difference between concurrent and parallel because I seem to use them interchangably - there's a reason. In Elixir there really is no difference between concurrent and parallel. Anything that is done with processes can either be run concurrently or in parallel (because of immutability!) - we write everything in parallel by default. 
+In Elixir there really is no difference between concurrent and parallel https://tomjoro.github.io/2017-02-03-why-reactive-fp-sucks/. Anything that is done with processes can either be run concurrently or in parallel because of immutability and local state. Processes are lightweight and are used like as any other language construct. 
 
-Imperative code is easier to understand and makes programs more reliable, but it's not the same as mutation.
+Processes allow one to primarily realize the _dependent_ steps needed to accomplish a task. Imperative code is easy to understand and makes programs more reliable, and it doesn't require mutation.
 
-The world is changing and Erlang & Elixir which might have historically been impractical in many contexts, have suddenly become relevant and practical (Why? See my other Blog https://tomjoro.github.io/2017-01-31-world-changed/ _Hint: distributed and parallel are no longer special cases._
+This style of programming might have historically been impractical in many contexts, but have suddenly become relevant and practical (Why? See my other Blog https://tomjoro.github.io/2017-01-31-world-changed/ _Hint: distributed and parallel are no longer special cases._
 
 # Elixir's Category 
 
-There is some middle ground, a category, between pure-functional languages and impure languages with mutable state -- and that middleground is a category Elixir owns. I belive this is what drives the continued growth of Elixir. 
+There is some middle ground, a category, between *pure-functional languages* and *impure languages with mutable state* -- and that middleground is a category that Elixir owns. I belive this is what drives the continued growth of Elixir. Giving this category a name is difficult and it's referred to in many different ways: is it "impure functional with distrubted and immutable state" or "functional, dynamic, safe language", or ?. In my opinion the category Elixir is in should be called "Reliable Languages".
 
-Why do I care? Because I care about reliability.
+Why?
 
 Erlang (and therefore Elixir) wasn't designed to be an accurate representation of physical computers, or to be mathematically provable, or scalable, or versatile, or even being friendly and fun for programmers - its first and foremost goal was to be reliable. Every decision about the language as it evolved was driven by this concern: 
 * Reliable programs are simple and understandable,
