@@ -180,7 +180,9 @@ Back to the original question: Is pure functional programming a lie?  Yes it is 
 
 # Elixir's Category 
 
-There is some middle ground, a category, between *pure-functional languages* and *impure languages with mutable state* -- and that middleground is a category that Elixir owns. I belive this is what drives the continued growth of Elixir. Giving this category a name is difficult and it's referred to in many different ways: is it "impure functional with distrubted and immutable state" or "functional, dynamic, safe language", or ?. In my opinion the category Elixir is in should be called "Reliable Languages".
+There is some middle ground, a category, between *pure-functional languages* and *impure languages with mutable state* -- and that middleground is a category that Elixir owns. I belive this is what drives the continued growth of Elixir. 
+
+Giving this category a name is difficult and it's referred to in many different ways: is it "impure functional with distrubted and immutable state" or "functional, dynamic, safe language", or ?. In my opinion the category Elixir is in should be called "Reliable Languages".
 
 Why?
 
