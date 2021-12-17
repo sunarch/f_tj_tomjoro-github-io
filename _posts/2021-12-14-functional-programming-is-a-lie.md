@@ -102,6 +102,8 @@ In this drawing, x had an assigned value of 25 and after calling f(x) the output
 
 Of these three statements, mutation is the hardest one to understand because the black box can no longer be treated as a black box - it can affect the world outside the box. We must look into the black box to understand what it did to x. 
 
+In languages that have immutable state recusion is not somthing to avoid, rather it's the only way to loop. Recursion is seen as dangerous in many languages - but that's because they have mutation.
+
 # Mutation is a Lie
 
 Remember the beer analogy, i.e. that the shelf has state, that computer memory has state.
@@ -122,7 +124,7 @@ State arises from recursion in time. Original computer memories were things like
 
 You don't have to understand this diagram, but notice how the lines feedback on themselves. This is recursion in time. There's all the proof you need: state arises from recusion in time :)
 
-So, given that we have immutable, yet distributed state, then you just have to accept side-effects, i.e. given same inputs a function can return different results. Introducing side effects means you can no longer use mathematical descriptions!
+So, given that we have immutable, yet distributed, then you just have to accept side-effects, i.e. given same inputs a function can return different results. Introducing side effects means you can no longer use mathematical descriptions!
 
 In the Erlang/Elixir view of the world, you program with local immutable state in processes. Process have recusion so that they do have observable state. To know the state, you just have to send a message to the process and ask for what the current "state" is. Each process is a world unto itself and has nothing shared with other processes.
 
