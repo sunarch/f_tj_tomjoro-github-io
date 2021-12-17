@@ -7,11 +7,13 @@ tags: [Functional Programming, Elixir]
 
 Recently I read some articles with catchy headlines like: Pure Functional Programming is a Lie, Functional Programming is not Real, etc. -- what's reality got do do with it? Some of these articles are often written by experts, i.e. developers or computer scientists who have years of experience in pure functional programming - I wonder where the disillusionment is coming from.
 
-Statements like this: In the real world computers have mutable state, so trying to program without mutable state goes against the natural order of things and makes programming difficult.
+This seems to be their conclusion: _In the real world computers have mutable state, so trying to program without mutable state goes against the natural order of things and makes programming difficult._
 
 Smart people (developers) need justification for their (langauage) decision - it can't just be "follow the crowd", or "it's easier". But do we need to bring _reality_ into the discussion? Software development is anything but real.
 
-I've thought about this question sometimes -  especially since I started using Elixir (5 years now) trying to build a mental framework for categorizing languages.
+And are there really only 2 choices? Either we reject mutability and program in a pure functional language, or we just accept mutable reality and join the crowd? 
+
+I've thought about this question sometimes, especially since I started using Elixir (5 years now), when trying to build a mental framework for categorizing languages.
 
 ## Functional languages and Pure functional languages
 
@@ -23,9 +25,13 @@ Pure functional languages are decendants of Lisp, like Haskell and F#. There's n
 * First class functions (functions can treated as data)
 * etc. 
 
-Javascript fails purity because it allows for mutation of state. Actually, most mainstream languagse fail for this same reason: Java, Go, C#, Rust, Python, Ruby, etc.
+Javascript fails purity because it allows for mutation of state. Actually, most mainstream languagse fail for this same reason: Java, Go, C#, Rust, Python, Ruby, etc. However, almost all of these languages have, or have recently, started to use a lot more functional and immutable constructs. 
 
-So is the world of programming languages divided only into pure and impure based on mutation? More on this later...
+So are there only two categories?
+* pure immutable functional,
+* impure and having on mutation.
+
+Read on to discover the shocking truth! ;)
 
 # State
 
