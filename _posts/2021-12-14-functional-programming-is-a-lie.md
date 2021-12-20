@@ -182,23 +182,14 @@ Back to the original question: Is pure functional programming a lie? Saying pure
 
 There is some middle ground, a category, between *pure-functional languages* and *impure languages with mutable state* -- and that middleground is a category that Elixir owns. I belive this is what drives the continued growth of Elixir. 
 
-Giving this category a name is difficult and it's referred to in many different ways: is it "impure functional with distrubted and immutable state" or "functional, dynamic, safe language", or ?. In my opinion the category Elixir is in should be called "Reliable Languages".
+Giving this category a name is difficult: is it "impure functional with distrubted and immutable state" or "functional, dynamic, safe language", or ?. How about just plain "Reliable"?
 
-Erlang (and therefore Elixir) wasn't designed to be an accurate representation of physical computers, or to be mathematically provable, or scalable, or versatile, or fast, or even friendly and fun for programmers - its first and foremost goal was to be reliable. Every decision about the language (and execution environment) as it evolved was prioritized by reliability, 
+_How is reliability defined? Reliable computing is correct functioning even if individual hardware or software components fail for any reason. The definition also includes secure computing which is about intentional attaks on your system. The moral of the story is that programmer mistakes might be enemies of proper functioning, sometimes evil parties, or sometimes silly users. ;) _
 
-Reliable software:
-* is simple and understandable,
-* is built from simple independent (possibly distributed) parts that are composed, 
-* has predictable and consistent behavior (scheduler, memory management, etc.),
-* is secure,
-* is maintainable,
-* scales - scaling is a bonus because simple composed independent components also scale better in many cases (nowadays)
-* etc.
-
-To be clear: I belive reliability is the most important criteria in a computer language. Of course, developers still need to write good reliable code - but reality (reality again?) is that we are only human and make mistakes. 
+Erlang (and therefore Elixir) wasn't designed to be an accurate representation of physical computers, or to be mathematically provable, or scalable, or versatile, or fast, or even friendly and fun for programmers - its first and foremost goal was to be reliable. Every decision about the language (and execution environment) as it evolved has prioritized by reliability as the most important criteria. Many other languages try to be fast and versatile at the detriment of reliability and newer languages even have escape hatches for programmers who dare to use unsafe features (usually to get more performance). But prioritizing reliability actually works in practice: Elixir it is fairly fast, extremely fair, quite versatile, scalable, easy to undestand and most importantly reliable. 
 
 # Disclaimer
 
-Just to set the record straight - Haskell is useful, Go is nice, I love Ruby, C++ is efficient, C# is handy, Java is solid, Rust makes sense, etc. - I've been programming for over 40 years and it's not my intention to bash on other languages - comparisons that evoke emotions promote thinking and discussion :) and so happy coding!
+Haskell is useful, Go is nice, I love Ruby, C++ is efficient, C# is handy, Java is solid, Rust makes sense, etc. - I've been programming for over 40 years and it's not my intention to bash on other languages - comparisons that evoke emotions promote thinking and discussion :) and so happy coding!
 
 (c) 2021 Thomas O'Rourke
