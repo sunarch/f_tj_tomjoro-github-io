@@ -184,7 +184,7 @@ There is some middle ground, a category, between *pure-functional languages* and
 
 Giving this category a name is difficult: is it "impure functional with distrubted and immutable state" or "functional, dynamic, safe language", or ?. How about just plain "Reliable"?
 
-_How is reliability defined? Reliable computing is correct functioning even if individual hardware or software components fail for any reason. The definition also includes secure computing which is about intentional attaks on your system. The moral of the story is that programmer mistakes might be enemies of proper functioning, sometimes evil parties, or sometimes silly users. ;) _
+_How is reliability defined? Reliable computing is correct functioning even if individual hardware or software components fail for any reason. The definition also includes secure computing which is about intentional attaks on your system._
 
 Erlang (and therefore Elixir) wasn't designed to be an accurate representation of physical computers, or to be mathematically provable, or scalable, or versatile, or fast, or even friendly and fun for programmers - its first and foremost goal was to be reliable. Every decision about the language (and execution environment) as it evolved has prioritized by reliability as the most important criteria. Many other languages try to be fast and versatile at the detriment of reliability and newer languages even have escape hatches for programmers who dare to use unsafe features (usually to get more performance). But prioritizing reliability actually works in practice: Elixir it is fairly fast, extremely fair, quite versatile, scalable, easy to undestand and most importantly reliable. 
 
