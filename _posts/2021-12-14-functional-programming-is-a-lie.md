@@ -19,7 +19,11 @@ I've thought about this question sometimes, especially since I started using Eli
 
 Javascript is a functional language. Why isn't it a "pure" functional language? 
 
-Pure functional languages, e.g. Haskell, F#, OCaml, are typically descendants of Lisp. Back in the early days of computer science, a lot of work was done to try to use math to prove program correctness. Think about that - it would mean that when you delivered your program to a customer you could say "this is provably correct so there cannot be any bugs by definition", unlike today when we say "it has 80% test coverage and worked when I tried it" ;) 
+https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Pure
+
+"Pure" or "Impure" in "Functional Languages".  
+
+Pure functional languages, e.g. Haskell - in the early days of computer science, a lot of work was done to try to use math to prove program correctness. Think about that - it would mean that when you delivered your program to a customer you could say "this is provably correct so there cannot be any bugs by definition", unlike today when we say "it has 80% test coverage and worked when I tried it" ;) 
 
 There's no exact definition of fuctionally pure purity, but generally it's these things:
 * Immutable state, 
@@ -63,10 +67,10 @@ I’d agree that _pure_ functional languages are not very practical, but don't t
 
 # Categories of Purity
 
-There are three categories:
-* Pure functional languages (Haskell, F#, Common LISP, OCaml) - also includes "mostly pure languages"
-* Impure languages (Java, Go, Rust, C#, Javascript, Ruby, Python, etc.)
-* Elixir
+There should be three categories:
+* Pure functional languages (Haskell, Elm) - also includes "mostly pure languages"
+* Erlang & Elixir (impure, but pure immutable data)
+* Impure languages (Java, Go, Rust, C#, Javascript, Ruby, Rust, Python, etc.)
 
 Elixir is the most widely used computer language that is 1) functional, 2) does not allow _any_ mutation, and 3) but does allow for side effects. 
 
@@ -125,13 +129,13 @@ The real world is immutable when viewed at any point in time
 
 State arises from recursion in time. When you look closely at how computer memories actually work, you can see this recursion _even at the level of the logic circuits that implement computer memory_
 
-And this is confirmed historically - original computer memories were things like mecury delay lines, even CRTs, as recused and repeatedly played back a signal put into them. In the past this was more outwardly apparent, but now this recursion is hidden in logic circuits.
+And this is confirmed historically - original computer memories were things like mecury delay lines, even CRTs, as recursed and repeatedly played back a signal put into them. In the past this was more outwardly apparent, but now this recursion is hidden in logic circuits.
 
  Here's a logic diagram of a flip-flop. A flip flop is a 1 bit computer memory and is how RAM is built in a _real_ computer.
 
 ![Elixir]({{ site.url }}/img/flipflop.png)
 
-You don't have to understand this diagram, but notice how the lines feedback on themselves. This is recursion in time. There's all the proof you need: state arises from recusion in time :) . 
+You don't have to understand this diagram, but notice how the lines feedback on themselves. This is recursion in time. There's all the proof you need: state arises from recursion in time :) . 
 
 And since computer memory is built with recursion, I don't see that computers have any difficulty in executing this.
 
