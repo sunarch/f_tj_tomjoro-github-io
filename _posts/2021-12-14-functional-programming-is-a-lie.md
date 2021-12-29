@@ -1,29 +1,23 @@
 ---
 layout: post
-title: Is Functional Programming a Lie? 
+title: Is Pure Functional Programming a Lie? 
 image:  /img/blog_function.png
 tags: [Functional Programming, Elixir]
 ---
 
-Recently I read some articles with catchy headlines like: Pure Functional Programming is a Lie, Functional Programming is not Real, etc. -- what's reality got do do with it? Some of these articles are often written by experts, i.e. developers or computer scientists who have years of experience in pure functional programming - I wonder where the disillusionment is coming from.
+As more computer languages adopt functional constructs, e.g. closures are now available in Java, C++, etc., it seems pure functional languages have been pushed into a corner. 
 
-This seems to be their conclusion: _In the real world computers have mutable state, so trying to program without mutable state goes against the natural order of things and makes programming difficult and makes execution of those programs by real computers more difficult_
+Recently I've even read comments that Pure Functional programming just doesn't work in practice because real computers "don't work that way". By "That way", the point is made that real computers that execute programs have mutatable state, and if you don't have mutatable state then you're just making things very difficult for both execution engines and people who try to comprehend the programs. 
 
-Some developers feel the need for deeper justifications when choosing a computer language - it can't just be "follow the crowd", or "it's easier to find examples". But do we need to bring _reality_ into the discussion? 
+This all feels very polarizing - some developers feel the need for deeper justifications when choosing a computer language - it can't just be "follow the crowd", or "it's easier to find examples". But do we need to bring _reality_ into the discussion? 
 
 And are there really only 2 choices? Either we reject mutability and program in a pure functional language, or we just accept mutable reality and join the crowd? 
 
 I've thought about this question sometimes, especially since I started using Elixir (5 years now), when trying to build a mental framework for categorizing languages.
 
-## Functional languages and Pure functional languages
+## Pure functional languages **
 
-Javascript is a functional language. Why isn't it a "pure" functional language? 
-
-https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Pure
-
-"Pure" or "Impure" in "Functional Languages".  
-
-Pure functional languages, e.g. Haskell - in the early days of computer science, a lot of work was done to try to use math to prove program correctness. Think about that - it would mean that when you delivered your program to a customer you could say "this is provably correct so there cannot be any bugs by definition", unlike today when we say "it has 80% test coverage and worked when I tried it" ;) 
+In the early days of computer science, a lot of work was done to try to use math to prove program correctness. Think about that - it would mean that when you delivered your program to a customer you could say "this is provably correct so there cannot be any bugs by definition", unlike today when we say "it has 80% test coverage and worked when I tried it" ;) 
 
 There's no exact definition of fuctionally pure purity, but generally it's these things:
 * Immutable state, 
@@ -31,17 +25,46 @@ There's no exact definition of fuctionally pure purity, but generally it's these
 * First class functions (functions can treated as data)
 * etc. 
 
-Javascript fails purity because it allows for mutation of state. Actually, most mainstream languagse fail for this same reason: Java, Go, C#, Rust, Python, Ruby, etc. However, almost all of these languages have, or have recently, started to use a lot more functional and immutable constructs. 
+Javascript is a functional language. Why isn't it a "pure" functional language? 
 
-So are there only two categories?
-* pure immutable functional,
-* impure and having on mutation.
+* Javascript fails purity because it allows for mutation of state. Actually, most mainstream languagse fail for this same reason: Java, Go, C#, Rust, Python, Ruby, etc. However, almost all of these languages have, or have recently, started to use a lot more functional and immutable constructs. 
+* Rust fails because it has unsafe modes (you might argue that if you don't use unsafe then it is safe, but that's besides the point - we're talking about languages not usages)
+* Erlang and Elixir fail this test because they are impure (they allow side effects)
+
+So are there only two categories? Pure functional languages, e.g. Haskell, OCaml, and everything else that can do anything functional (Java, Rust, C++, Ruby, Javascript, etc.)?
 
 Read on to discover the shocking truth! ;)
 
+## Functional languages and Pure functional languages
+
+Take a look at this list:
+
+https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Pure
+
+You'll notice the list of "Functional Languages", or languages that have functional constructs is very long nowadays! However, the list of *pure* functional languages is just a few, e.g. Haskell, Ocaml, etc.
+
+These categorizations are very confusing:
+* Languages like Rust have functional and immutable constructs, but they also have unsafe modes (usually for performance)
+* Clojure prefers immtability, but it is not limited to it
+* Mixed mode languages like Scala have everything
+
+Where in this list are the "Languages that have immutable constructs"? 
+
+I even tried searching Stack Overflow (I use it very seldomly nowadays) - "Computer Languages with Only Immutability". Seems most people misunderstood the question, or fail to believe it is possible to understand that there even is such a category. There isn't one on wikipedia (someone needs to fix that!)
+
+There are at least a couple of widely used languages that have immutability _only_. _The key word here is the word "only", which means "there is no unsafe mode, there is only immutable"._
+* Haskell
+* Erlang / Elixir
+
+But that doesn't add up? Erlang is not *pure*, but it is *functional*, so is it in the same category with Haskell or the same category with Clojure?
+
+Answer: No - Erlang & Elixir are in a different category that a lot of developers don't even know exists. This category is for lack of a better term: "Functional but impure, yet immutable".
+
 # State
 
-## Mutatble state
+What is mutable state (or immutable) and why is it important?
+
+## Mutatble state 
 I put 99 beers on the shelf. The shelf now has 99 beers. Hence, the real world has state.
 
 In programming terms I take a variable "x" to be the shelf, and I give x a value of 99. If I take one away then x is 98 beers. The shelf has state and is mutable.
@@ -49,38 +72,43 @@ In programming terms I take a variable "x" to be the shelf, and I give x a value
 This is the same way computer memory works. I store value in a register or in a memory location and it's stays there. 
 
 ## Immutable state
-Pure functional languages don't allow mutation. In our beer analogy, the shelf with 99 beers can never be anything else. If you want a shelf with 98 beers, you'll need a new shelf because the shelf with 99 beers _cannot_ mutate.
+Pure functional languages don't allow mutation. In our beer analogy, the shelf with 99 beers can never be anything else. If you want a shelf with 98 beers, you'll need a _new_ shelf because the shelf with 99 beers _cannot_ mutabe changed (i.e. mutate).
 
-Not only is this difficult to understand, in a pure functional language state changes are realized with functions - which can get very complex as the entire state of the world (the program) needs to be traceable to every action that caused a change. 
+This seems impractical (think of the garbage collection!), and difficult to understand. 
+
+In a pure functional language this concept of immutable state is taken even one step further - we need to know how the state was changed. In a pure functional language state changes are realized with functions which can be seen and reduced - which can get very complex as the entire state of the world (the program) needs to be traceable to every action that caused a change. 
 
 ## Who's lying?
 
 Does the real world have mutable state? Certainly seems like the mutable state matches our _view_ of the world better and I can't argue with that -- this is the "functional programming is a lie" bit.
 
-But pure functional programming does match mathematics. That means that it's easier to prove what happened in a mathematical and conclusive fashion. In pure functional languages beers don't just disappear - there's a reason that can be traced! (very useful!)
+But pure functional programming does match mathematics. That means that it's easier to prove what happened in a mathematical and conclusive fashion. In pure functional languages beers don't just disappear - there's a reason that can be traced! (very useful!).
 
 ## Real computers 
 
 I don't know why it's important for a programming language to actually represent how they are implemented in physical computers. As far as I am concerned our goal as programmers is primarily to write programs that both humans and computers can understand and that work reliably.
 
-I’d agree that _pure_ functional languages are not very practical, but don't throw the baby out with the bathwater. Just because you drop the "pure" part of "pure functional programming" doesn't mean you should give up an all the tennants (immutability, substitution (no side effects), first-class functions, etc.) 
+I’d agree that _pure_ functional languages are not very practical, but don't throw the baby out with the bathwater. Just because you drop the "pure" part of "pure functional programming" doesn't mean you should give up an _all_ the tennants (immutability, substitution (no side effects), first-class functions, etc.) 
 
-# Categories of Purity
+# Categories of Functional Languages
 
 There should be three categories:
 * Pure functional languages (Haskell, Elm) - also includes "mostly pure languages"
-* Erlang & Elixir (impure, but pure immutable data)
-* Impure languages (Java, Go, Rust, C#, Javascript, Ruby, Rust, Python, etc.)
+* Functional language having only immutabiliy: Erlang & Elixir 
+* Impure Functional languages (Java, Rust, C++, Javascript, Ruby, Rust)
 
 Elixir is the most widely used computer language that is 1) functional, 2) does not allow _any_ mutation, and 3) but does allow for side effects. 
 
-That's what makes Elixir so hard to grasp for newcomers. Because if you're trying to put in the one of the pure or impure categories you will find it doesn't fit in either!
-
-_That'a a bit of a hidden joke because I really don't know any other languages in this category -  maybe readers of this Blog can help me out. And that just because Elixir might be unique in these regards that doesn't mean it's not a practical language (it is), nor that it is not widely used (it is)._
+That's what makes Erlang & Elixir so hard to grasp for newcomers. Because if you're trying to put in the one of the *pure* or *impure* categories you will find it doesn't fit in either!
 
 # Mutation is Evil
 
+Why all the concern about mutation? I thought mutation is easier to understand? It might might be on the surface, but let's go a bit deeper.
+
 Reliable programming languages (and even languages that have mutable constructs) use immutability to make programs easier to understand for both humans and computers.
+* C++'s standard library uses immutability for improving reliability and concurrency
+* Clojure uses it for the same reason
+* Rust uses it for the same reason
 
 For a primer: here's an example of immutable in action in Elixir:
 ```
@@ -116,12 +144,16 @@ Of these three cases, *mutation* is the hardest one to understand and compose be
 
 # The Real World
 
+When I was first learning Elixir I had to find a deep justification for immutability. I could turn to Computer Science (everything is expressible with recursion) or math for justification. But what about the real world and real computers? If I looked at the problem it really seemed that the real world had mutation. And then I realized what I was missing.
+
 ## Time
-Remember the beer analogy, i.e. that the shelf has state, that computer memory has state?  
+Remember the beer analogy, i.e. that the shelf has state, that computer memory has state? You have to understand this:  
 
-The real world is actually _immutable_. 
+    The real world is actually _immutable_. 
 
-How can this be? It's because we forgot to consider _time_ in our world view - and time does exist!
+How can this be? 
+
+    It's because we forgot to consider _time_ in our world view - and time does exist!
 
 The real world is immutable when viewed at any point in time
 * the past can’t be changed and 
@@ -139,11 +171,15 @@ You don't have to understand this diagram, but notice how the lines feedback on 
 
 And since computer memory is built with recursion, I don't see that computers have any difficulty in executing this.
 
+The fact that time is real has further implications. 
+
 ## Distribution 
 
-If time is real, it also prevents us from know the state of the entire world at any point in time. We can only know our own local state (or nearby). This is distribution.
+If time is real, it also prevents us from knowing the state of the entire world at any point in time. We can only know our own local state (or nearby state). This is distribution and the source of side effects.
 
-If you accept distribution then you just have to accept side-effects, because state is going to change in other "parts" for reasons unbeknownst to our local reference. Introducing side effects means you can no longer use mathematical descriptions of the entire system (relativity - very Einstein)! What are these "parts", or local references?
+If you accept distribution then you just have to accept side-effects, because state is going to change in other "parts" for reasons unbeknownst to our local reference. In the beer example, you have to go to the shelf to check for beers as it is impossible for you to know without checking.
+
+Introducing side effects means you can no longer use mathematical descriptions of the entire system (relativity - very Einstein)! What are these "parts", or local references?
 
 In the Erlang/Elixir these independent "parts" that each have their own local and immutable state are *processes*. Processes have observable state, which can be observed from the outside by sending a message to the process and asking it for the state and the process in turn sending you a response. Each process is a consistent world unto itself and has nothing shared with other processes.
 
@@ -151,32 +187,6 @@ This matches the real world - If you can’t know what’s happening somewhere e
 
 The nice thing about this is that processes can't interfere with other processes by definition, and hence can be cleanly terminated at any time. This in turn guarantees that the system as a whole can continue to run predictably regardless of the failure of individual parts. Programming languages that have shared mutable state, at any level and through any mechanism, cannot provide this guarantee. The only way to provide this guarantee is completely ban shared mutatable state (processes can only communicate by messaging).
 
-# Imperative is Simpler
-
-A lot of developers might be surprised with Elixir because most of the code you see looks very imperative. In an imperative language code is executed from top to bottom, one statement (expression actually) after another. 
-
-For example:
-
-```
-file = File.read!("my_file.txt")
-strs = String.split(file, " ", trim: true)
-subs = Enum.map(strs, fn str -> if str == "tom" do "Tom" else "Tom" end)
-joined = Enum.join(subs, ",")
-Database.write(joined) #just an example
-IO.puts "done"
-```
-
-If Elixir is functional, then where are the callbacks, promises, awaits, etc? In Elixir I don't care if File.read is run in my process or asynchronous in another process - I need the result of the File.read before I can do the next thing. So I can write code simply and imperatively. What enables this?
-
-Processes (and threads) were invented for two purposes: 
-* To make it possible to write code simply and _imperatively_ (for humans)
-* To make it possible to run more efficiently, concurrently or in parallel (for computers)
-
-In Elixir there really is no difference between concurrent and parallel https://tomjoro.github.io/2017-02-03-why-reactive-fp-sucks/. Anything that is done with processes can either be run concurrently or in parallel with other processes because of immutability and local state. Processes are lightweight and are used like as any other language construct. 
-
-Processes use _dependent_ imperative steps to accomplish a task. Imperative code is easy to understand and makes programs more reliable. And you don't need mutation to do this.
-
-_This "style" of programming might have historically been impractical in many contexts, but has suddenly become relevant and practical (Why? See my other Blog https://tomjoro.github.io/2017-01-31-world-changed/ _Hint: distributed and parallel are no longer special cases._
 
 # Is Pure Functional Programming a Lie?
 
