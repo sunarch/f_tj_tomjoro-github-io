@@ -163,8 +163,13 @@ Of these three cases, *mutation* is the hardest one to understand and compose be
 
 When I was first learning Elixir I had to find a deep justification for immutability. I could turn to Computer Science (everything is expressible with recursion) or math for justification. But what about the real world and real computers? If I looked at the problem it really seemed that the real world had mutation. And then I realized what I was missing.
 
+From https://www.quora.com/Is-there-anything-you-don-t-like-about-Functional-Programming/answer/Jussi-Raunio?ch=10&share=4a170b91&srid=lM1b
+"At fundamental level, computers are state machines and they can only represent computations through global state changes"
+
+I disagree, rather I think global state in computers is a myth! When is the last time you used a computer that wasn't connected to a network, or one that didn't have multiple cores, I/O, or a GPU, etc. What's the missing piece?
+
 ## Time
-Remember the beer analogy, i.e. that the shelf has state, that computer memory has state? You have to understand this:  
+Remember the beer analogy, i.e. that because the beer shelf had state, it follows that this is a reflection of the real world:  
 
 __The real world is actually immutable.__
 
