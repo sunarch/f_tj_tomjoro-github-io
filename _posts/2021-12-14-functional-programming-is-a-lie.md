@@ -1,10 +1,14 @@
-
+---
+ layout: post
+ title: Is Functional Programming a Lie? 
+ title: Is Pure Functional Programming a Lie? 
+ image:  /img/blog_function.png
+ tags: [Functional Programming, Elixir]
+---
 
 As more computer languages adopt functional constructs, e.g. closures are now available in Java, C++, etc., it seems pure functional languages have been pushed into a corner. 
 
 Recently I've even read comments that Pure Functional programming just doesn't work in practice because real computers "don't work that way". By "That way", the point is made that real computers that execute programs have mutatable state, and if you don't have mutatable state then you're just making things very difficult for both execution engines and people who try to comprehend the programs. 
-
-This seems to be borne out by the trend to
 
 This all feels very polarizing - some developers feel the need for deeper justifications when choosing a computer language - it can't just be "follow the crowd", or "it's easier to find examples". But do we need to bring _reality_ into the discussion? 
 

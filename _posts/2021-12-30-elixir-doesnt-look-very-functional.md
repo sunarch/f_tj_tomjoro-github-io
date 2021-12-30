@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Elixir code doesn't look very functional 
-image:  /img/blog_function.png
+image:  /img/mutation2.png
 tags: [Functional Programming, Elixir]
 ---
 
