@@ -166,14 +166,14 @@ When I was first learning Elixir I had to find a deep justification for immutabi
 ## Time
 Remember the beer analogy, i.e. that the shelf has state, that computer memory has state? You have to understand this:  
 
-    The real world is actually _immutable_. 
+__The real world is actually immutable.__
 
 How can this be? 
 
-    It's because we forgot to consider _time_ in our world view - and time does exist!
+__We forgot to consider _time_ in our world view - and time does exist!__
 
 The real world is immutable when viewed at any point in time
-* the past can’t be changed and 
+* the past can’t be changed  
 * state is only definable by observation (at a time)
 
 State arises from recursion in time. When you look closely at how computer memories actually work, you can see this recursion _even at the level of the logic circuits that implement computer memory_
@@ -194,7 +194,7 @@ The fact that time is real has further implications.
 
 If time is real, it also prevents us from knowing the state of the entire world at any point in time. We can only know our own local state (or nearby state). This is distribution and the source of side effects.
 
-If you accept distribution then you just have to accept side-effects, because state is going to change in other "parts" for reasons unbeknownst to our local reference. In the beer example, you have to go to the shelf to check for beers as it is impossible for you to know without checking.
+If you accept distribution then you just have to accept side-effects, because state is going to change in other "parts" for reasons unknown (who drank my beer?). In the beer example, you have to go to the shelf to check for beers as it is impossible for you to know without checking.
 
 Introducing side effects means you can no longer use mathematical descriptions of the entire system (relativity - very Einstein)! What are these "parts", or local references?
 
