@@ -1,13 +1,10 @@
----
-layout: post
-title: Is Pure Functional Programming a Lie? 
-image:  /img/blog_function.png
-tags: [Functional Programming, Elixir]
----
+
 
 As more computer languages adopt functional constructs, e.g. closures are now available in Java, C++, etc., it seems pure functional languages have been pushed into a corner. 
 
 Recently I've even read comments that Pure Functional programming just doesn't work in practice because real computers "don't work that way". By "That way", the point is made that real computers that execute programs have mutatable state, and if you don't have mutatable state then you're just making things very difficult for both execution engines and people who try to comprehend the programs. 
+
+This seems to be borne out by the trend to
 
 This all feels very polarizing - some developers feel the need for deeper justifications when choosing a computer language - it can't just be "follow the crowd", or "it's easier to find examples". But do we need to bring _reality_ into the discussion? 
 
@@ -41,67 +38,84 @@ Take a look at this list:
 
 https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Pure
 
-You'll notice the list of "Functional Languages", or languages that have functional constructs is very long nowadays! However, the list of *pure* functional languages is just a few, e.g. Haskell, Ocaml, etc.
+The list of functional languages has only two categories: *Pure* and *impure*.
 
-These categorizations are very confusing:
-* Languages like Rust have functional and immutable constructs, but they also have unsafe modes (usually for performance)
-* Clojure prefers immtability, but it is not limited to it
-* Mixed mode languages like Scala have everything
+![Elixir]({{ site.url }}/img/languages.png)
 
-Where in this list are the "Languages that have immutable constructs"? 
+The list of "Functional Languages", or languages that have functional constructs is very long nowadays! However, the list of *pure* functional languages is a lot shorter, e.g. Haskell, Ocaml, etc.
 
-I even tried searching Stack Overflow (I use it very seldomly nowadays) - "Computer Languages with Only Immutability". Seems most people misunderstood the question, or fail to believe it is possible to understand that there even is such a category. There isn't one on wikipedia (someone needs to fix that!)
+Where in this list are the _Languages with immutable data_? Is mutation/immutable just a minor detail? ! ?
 
-There are at least a couple of widely used languages that have immutability _only_. _The key word here is the word "only", which means "there is no unsafe mode, there is only immutable"._
+I even tried searching Stack Overflow (I use it very seldomly nowadays) - "Computer Languages with Only Immutability". Seems most people misunderstood the question, __or fail to believe it is possible to understand that there even is such a category__. 
+
+Anyways, there are at least a couple of widely used languages that have immutability _only_. _The key word here is the word "only", which means "there is no unsafe mode, there is only immutable"._
 * Haskell
 * Erlang / Elixir
 
-But that doesn't add up? Erlang is not *pure*, but it is *functional*, so is it in the same category with Haskell or the same category with Clojure?
+Here's some drawings I made that focuses on only Pure and Impure as defined by 1) Purity (no side effects), and 2) Mutable (or immutable) data:
 
-Answer: No - Erlang & Elixir are in a different category that a lot of developers don't even know exists. This category is for lack of a better term: "Functional but impure, yet immutable".
+### Only Pure and Impure
+This is the categorization on Wikipedia:
+
+![Elixir]({{ site.url }}/img/pure_impure.png)
+
+But where is Erlang and Elixir in this drawing???
+
+### Elixir and Erlang 
+
+Elixir and Erlang are impure, yet they do have immutable (only) data.
+
+![Elixir]({{ site.url }}/img/erlang_middle.png)
+
+## Category: Impure, yet immutable
+
+![Elixir]({{ site.url }}/img/erlang_category.png)
+
+
+Here's what the list should look like:
+
+Functional languages:
+* Pure functional languages with immutable data
+* Impure functional languages with immutable data
+* Functional languages
+
+## But "Mutation is a reality, the correct approach is disciplined mutation"
+
+ I can hear a thousand voices calling out that: Yes, but Rust, Clojure, etc., have immutable data constructs and that if you just keep your mutations in a box then you're ok.
+ 
+"Mutation is a reality, the correct approach is disciplined mutation. "https://news.ycombinator.com/item?id=18044656
+
+Mutation is like a virus and has severe consequences in a language: if you allow any possibility to mutate data in any way (like "unsafe" mode) then the language looses the ability to provide certain guarantees as we will see in the next sections (and add threads to mutation and you have a recipe for nondeterminism) - https://www2.eecs.berkeley.edu/Pubs/TechRpts/2006/EECS-2006-1.pdf
+
+The main issue here is that language designers often try to solve _all problems_ with a single language. Erlang and Elixir have a different answer: __If you need mutation use another language__. Seriously, that's not that different from "box mutation in unsafe mode" and for the record: most programs don't need mutability for anything other than _performance_, and that performance gained by using mutation is dimished when you consider highly parallel and concurrent systems (which is pretty much everything nowadays). https://tomjoro.github.io/2017-01-31-world-changed/
 
 # State
 
-What is mutable state (or immutable) and why is it important?
+What is mutable state/data (or immutable) anyways and how does it relate to the real world?
 
-## Mutatble state 
+## Mutable state/data 
 I put 99 beers on the shelf. The shelf now has 99 beers. Hence, the real world has state.
 
 In programming terms I take a variable "x" to be the shelf, and I give x a value of 99. If I take one away then x is 98 beers. The shelf has state and is mutable.
 
 This is the same way computer memory works. I store value in a register or in a memory location and it's stays there. 
 
-## Immutable state
+## Immutable state/data
 Pure functional languages don't allow mutation. In our beer analogy, the shelf with 99 beers can never be anything else. If you want a shelf with 98 beers, you'll need a _new_ shelf because the shelf with 99 beers _cannot_ mutabe changed (i.e. mutate).
 
 This seems impractical (think of the garbage collection!), and difficult to understand. 
 
 In a pure functional language this concept of immutable state is taken even one step further - we need to know how the state was changed. In a pure functional language state changes are realized with functions which can be seen and reduced - which can get very complex as the entire state of the world (the program) needs to be traceable to every action that caused a change. 
 
-## Who's lying?
+##  Real computers / real world
 
 Does the real world have mutable state? Certainly seems like the mutable state matches our _view_ of the world better and I can't argue with that -- this is the "functional programming is a lie" bit.
 
 But pure functional programming does match mathematics. That means that it's easier to prove what happened in a mathematical and conclusive fashion. In pure functional languages beers don't just disappear - there's a reason that can be traced! (very useful!).
 
-## Real computers 
+I don't know why it's important for a programming language to actually represent how they are executed in physical computers. As far as I am concerned our goal as programmers is primarily to write programs that both humans and computers can understand and that work reliably.
 
-I don't know why it's important for a programming language to actually represent how they are implemented in physical computers. As far as I am concerned our goal as programmers is primarily to write programs that both humans and computers can understand and that work reliably.
-
-I’d agree that _pure_ functional languages are not very practical, but don't throw the baby out with the bathwater. Just because you drop the "pure" part of "pure functional programming" doesn't mean you should give up an _all_ the tennants (immutability, substitution (no side effects), first-class functions, etc.) 
-
-# Categories of Functional Languages
-
-There should be three categories:
-* Pure functional languages (Haskell, Elm) - also includes "mostly pure languages"
-* Functional language having only immutabiliy: Erlang & Elixir 
-* Impure Functional languages (Java, Rust, C++, Javascript, Ruby, Rust)
-
-Elixir is the most widely used computer language that is 1) functional, 2) does not allow _any_ mutation, and 3) but does allow for side effects. 
-
-That's what makes Erlang & Elixir so hard to grasp for newcomers. Because if you're trying to put in the one of the *pure* or *impure* categories you will find it doesn't fit in either!
-
-# Mutation is Evil
+# Mutation is an evil
 
 Why all the concern about mutation? I thought mutation is easier to understand? It might might be on the surface, but let's go a bit deeper.
 
@@ -187,23 +201,35 @@ This matches the real world - If you can’t know what’s happening somewhere e
 
 The nice thing about this is that processes can't interfere with other processes by definition, and hence can be cleanly terminated at any time. This in turn guarantees that the system as a whole can continue to run predictably regardless of the failure of individual parts. Programming languages that have shared mutable state, at any level and through any mechanism, cannot provide this guarantee. The only way to provide this guarantee is completely ban shared mutatable state (processes can only communicate by messaging).
 
+In a way, Elixir and Erlang processes work similar to how an operating system works: there are processes that are isolated and have their own memory - that's why computers crash less often than our software! But Erlang goes a lot further and introduces consistent communication concepts, error handling, location (network) transparency, etc., resource control, etc.
 
 # Is Pure Functional Programming a Lie?
 
-Back to the original question: Is pure functional programming a lie? Saying pure functional programming is a lie is like saying math is a lie. It's not a lie, but it doesn't always map well to the real world of computers -  but that's not because of immutability, but instead stems from not taking time and distribution into account.
+Back to the original question: Is pure functional programming a lie? Saying pure functional programming is a lie is like saying math is a lie. It's not a lie, but it doesn't always map well to the real world of computers -  but that's not because of immutability, but instead stems from not taking *time* and *distribution* into account.
+
+
+
 
 # Elixir's Category 
 
-There is some middle ground, a category, between *pure-functional languages* and *impure languages with mutable state* -- and that middleground is a category that Elixir owns. I belive this is what drives the continued growth of Elixir. 
+There is some middle ground, a category, between *pure-functional languages* and *impure languages with mutable state* -- and that middleground is a category that Elixir owns. I belive this is what drives the continued growth of Elixir. Elixir is not a "solve all problems" language, but it does work efficiently in more situations that many developers ever thought possible.
 
 Giving this category a name is difficult: is it "impure functional with distrubted and immutable state" or "functional, dynamic, safe language", or ?. How about just plain "Reliable"?
 
 _How is reliability defined? Reliable computing is correct functioning even if individual hardware or software components fail for any reason. The definition also includes secure computing which is about intentional attaks on your system._
 
-Erlang (and therefore Elixir) wasn't designed to be an accurate representation of physical computers, or to be mathematically provable, or scalable, or versatile, or fast, or even friendly and fun for programmers - its first and foremost goal was to be reliable. Every decision about the language (and execution environment) as it evolved has prioritized by reliability as the most important criteria. Many other languages try to be fast and versatile at the detriment of reliability and newer languages even have escape hatches for programmers who dare to use unsafe features (usually to get more performance). But prioritizing reliability actually works in practice: Elixir it is fairly fast, extremely fair, quite versatile, scalable, easy to undestand and most importantly reliable. 
+Erlang (and hence Elixir) and the BEAM virtual machine that it runs on, first and foremost goal is to be reliable. Every decision about the language (and BEAM execution environment) as it evolved has prioritized having reliability as the most important criteria. 
+* Simple code is reliable code because people understand it
+* Imperative code is simple to understand  (https://tomjoro.github.io/2021-12-30-elixir-doesnt-look-very-functional/)
+* Immutability is simpler and can be location transparent
+
+Many other languages try to be fast and versatile at the detriment of reliability, and many functional languages even have escape hatches for programmers who dare to use unsafe features (usually to get more performance). But prioritizing reliability actually works in practice: Elixir it is fairly fast, extremely fair, quite versatile, scalable, easy to undestand and most importantly reliable. 
+
+
 
 # Disclaimer
 
 Haskell is useful, Go is nice, I love Ruby, C++ is efficient, C# is handy, Java is solid, Rust makes sense, etc. - I've been programming for over 40 years and it's not my intention to bash on other languages - comparisons that evoke emotions promote thinking and discussion :) and so happy coding!
 
 (c) 2021 Thomas O'Rourke
+
