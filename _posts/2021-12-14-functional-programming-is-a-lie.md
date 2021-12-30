@@ -28,7 +28,7 @@ There's no exact definition of fuctionally pure purity, but generally it's these
 
 Javascript is a functional language. Why isn't it a "pure" functional language? 
 
-* Javascript fails purity because it allows for mutation of state. Actually, most mainstream languagse fail for this same reason: Java, Go, C#, Rust, Python, Ruby, etc. However, almost all of these languages have, or have recently, started to use a lot more functional and immutable constructs. 
+* Javascript fails purity because it allows for mutation of state. Actually, most mainstream languagse fail for this same reason: Java, Go, C#, Rust, Python, Ruby, etc. However, almost all of these languages have, or have recently, started to use a lot more functional and immutable constructs
 * Rust fails because it has unsafe modes (you might argue that if you don't use unsafe then it is safe, but that's besides the point - we're talking about languages not usages)
 * Erlang and Elixir fail this test because they are impure (they allow side effects)
 
@@ -58,8 +58,10 @@ Anyways, there are at least a couple of widely used languages that have immutabi
 
 Here's some drawings I made that focuses on only Pure and Impure as defined by 1) Purity (no side effects), and 2) Mutable (or immutable) data:
 
-### Only Pure and Impure
+### Pure and Impure
 This is the categorization on Wikipedia:
+* "Pure" = No side effects, and "Impure" = side effects
+* "Immutable" = No mutation of data, "Mutate" = allows mutation of data
 
 ![Elixir]({{ site.url }}/img/pure_impure.png)
 
@@ -71,14 +73,11 @@ Elixir and Erlang are impure, yet they do have immutable (only) data.
 
 ![Elixir]({{ site.url }}/img/erlang_middle.png)
 
-## Category: Impure, yet immutable
+## Erlang and Elixir: Impure, yet immutable
 
 ![Elixir]({{ site.url }}/img/erlang_category.png)
 
-
-Here's what the list should look like:
-
-Functional languages:
+Here's what the list of functional languages should look like:
 * Pure functional languages with immutable data
 * Impure functional languages with immutable data
 * Functional languages
@@ -175,7 +174,7 @@ How can this be?
 
 The real world is immutable when viewed at any point in time
 * the past can’t be changed and 
-* state is only definable by observation (at a time).
+* state is only definable by observation (at a time)
 
 State arises from recursion in time. When you look closely at how computer memories actually work, you can see this recursion _even at the level of the logic circuits that implement computer memory_
 
@@ -210,9 +209,6 @@ In a way, Elixir and Erlang processes work similar to how an operating system wo
 # Is Pure Functional Programming a Lie?
 
 Back to the original question: Is pure functional programming a lie? Saying pure functional programming is a lie is like saying math is a lie. It's not a lie, but it doesn't always map well to the real world of computers -  but that's not because of immutability, but instead stems from not taking *time* and *distribution* into account.
-
-
-
 
 # Elixir's Category 
 
