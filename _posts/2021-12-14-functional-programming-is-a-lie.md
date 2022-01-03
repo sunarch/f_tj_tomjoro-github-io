@@ -125,7 +125,7 @@ It seems real computers have
 
 If working with functional programming and immutable data is so un-natural then why bother?
 
-I thought about this, until I realized that an important piece is missing from the world view: time.
+I thought about this, until I realized that an important piece is missing from the world view: time. Time makes the world immutable and global state impossible.
 
 ## Time
 
@@ -151,19 +151,25 @@ The fact that time is real has further implications.
 
 ## Global State
 
-Computers are connected to networks, have multiple cores, caches, I/O, GPU, etc. so how can global state exist? It can't, because the world is distributed.
+Time is real, and so it also prevents us from knowing the state of the entire world at any point in time. 
 
-Time is real, and so it also prevents us from knowing the state of the entire world at any point in time. There are actually many worlds and we can only know our a local state within some reference (a single world).
+Computers are connected to networks, have multiple cores, caches, I/O, GPU, etc. so how can global state exist? It can't, because the world is distributed. This is especially true nowadays as computing has become increasingly distributed and parallel even on a small scale.  https://tomjoro.github.io/2017-01-31-world-changed/
 
 What does this picture look like: 
 
 ![Elixir]({{ site.url }}/img/worlds.png)
 
-So, even though each world internally uses immutable state, if viewed from the outside, i.e. observed, then it has state. This is one of things that confuses people about Elixir - it seems there is state everywhere, but at the same time data is immutable!
+So, even though each world internally uses immutable state, if viewed from the outside, i.e. observed, then it has state. BTW this is also where side-effects come from: things change somewhere else and we just have to accept that.
+
+## Elixir
+
+Elixir: immutable data, and non-global state.
+
+This is one of things that confuses people about Elixir - it seems there is state everywhere, but at the same time data is immutable!
 
 In the Erlang/Elixir these independent "worlds" that each have their own local and immutable state are *processes*. Processes are single threads of execution that have observable state. State can be seen by sending a message to the process and asking it, and then the process sending you a response. Each process is a consistent world unto itself and has nothing shared with other processes. There are no mutexes, etc., in Elixir because there are no threads that can share memory.
 
-This also matches the real world - state must be communicated to be known. _This is especially true nowadays as computing has become increasingly distributed and parallel even on a small scale._ https://tomjoro.github.io/2017-01-31-world-changed/
+This also matches the real world - state must be communicated to be known. 
 
 Process and the share-nothing approach has great benefits:
 * Fail without interfering with other processes
