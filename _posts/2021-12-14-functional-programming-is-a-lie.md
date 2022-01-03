@@ -6,19 +6,19 @@
  tags: [Functional Programming, Elixir]
 ---
 
-As more computer languages adopt functional constructs it seems *pure* functional languages have been pushed into a corner. Many developers are familar with closures in Javascript, and they are now available in Java, C++, etc., but *pure* functional languages are a bit different - namely they are stricter in the definition of "functional". If functional is good, then why aren't more developers going even farther and start to use pure functional languages like Haskell, OCaml, etc.?
+As more computer languages adopt functional constructs it seems *pure* functional languages have been pushed into a corner. Many developers are familar with closures in Javascript, and they are now available in Java, C++, etc., but *pure* functional languages are a bit different - they are stricter in the definition of "functional". If functional is good, why aren't pure functional languages like Haskell, OCaml, etc. used more widely?
 
-One suggested reason for thhe lack of adoption is because *pure* functional languages aren't practical, i.e. they are too strict and they don't reflect the "real" (reality) world of computers - real computers have mutable state, and therefore trying to program without mutable state is just a mathematical exercise and also hard for software developers to comprehend.
+Some developers claim *pure* functional languages aren't practical, i.e. they are too strict and they don't reflect the "real" (reality) world of computers because real computers have mutable state, and so trying to program without mutable state is just a mathematical exercise (and also hard for software developers). What's reality got to do with programming languages?
 
-Why choose a *pure* or *impure* functional language? For many developers it can't just be "follow the crowd", or "it's easier to find examples". But do we need to bring _reality_ into the discussion? 
+Why choose a *pure* or *impure* functional language? And are there really only 2 choices? Either we reject mutability and program in a pure functional language, or we just accept mutable reality and join the impure crowd? 
 
-And are there really only 2 choices? Either we reject mutability and program in a pure functional language, or we just accept mutable reality and join the crowd? 
-
-I've thought about this question sometimes, especially since I started using Elixir (5 years now), when trying to build a mental framework for categorizing languages.
+I've thought about this question since I started using Elixir (5 years now), when trying to build a mental framework for categorizing languages.
 
 # Pure Functional Languages 
 
-In the early days of computer science, a lot of work was done to try to use math to prove program correctness. Think about that - it would mean that when you delivered your program to a customer you could say "this is provably correct so there cannot be any bugs by definition", unlike today when we say "it has 80% test coverage and worked when I tried it" ;)  "testing can show the presence of bugs but not their absence" - Dijkstra
+ "Testing can show the presence of bugs but not their absence" - Dijkstra.
+
+In the early days of computer science, a lot of work was done to try to use math to prove program correctness. Think about that - it would mean that when you delivered your program to a customer you could say "this is provably correct so there cannot be any bugs by definition", unlike today when we say "it has 80% test coverage and worked when I tried it" ;) 
 
 There's no exact definition of fuctionally pure purity, but generally it's these things:
 * Immutable state / data, 
@@ -37,22 +37,11 @@ What is immutable data and what is a side effect?
 ## Functional Constructs 
 
 ### Mutation 
-I put 99 beers on the shelf. The shelf now has 99 beers. Hence, the real world has state.
+I put 99 beers on the shelf. The shelf now has 99 beers. Hence, the real world has state. I take one down, and drink it, and now the shelf has 98 beers (and so on). The shelf has state has changed from 99 to 98 beers, i.e. mutated. The shelf is like a memory location in a computer and the count of beers is the value stored there.
 
-In programming terms I take a variable "x" to be the shelf, and I give x a value of 99. If I take one away then x is 98 beers. The shelf has state and is mutable.
+Pure functional languages don't allow mutation. In our beer analogy, the shelf with 99 beers can never be anything else. If you want a shelf with 98 beers, you'll need a _new_ shelf because the shelf with 99 beers _cannot_  changed (i.e. mutate). Sounds wasteful! In pure functional languages beers don't just disappear - there's a reason (very useful!). 
 
-This is the same way computer memory works. I store value in a register or in a memory location and it's stays there. 
-
-Does the real world have mutable state? Certainly seems like the mutable state matches our _view_ of the world better and I can't argue with that -- this is the "pure functional programming is a lie" bit.
-
-But pure functional programming does match mathematics. That means that it's easier to prove what happened in a mathematical and conclusive fashion. In pure functional languages beers don't just disappear - there's a reason that can be traced! (very useful!), i.e. data is immutable.
-
-### Immutable 
-Pure functional languages don't allow mutation. In our beer analogy, the shelf with 99 beers can never be anything else. If you want a shelf with 98 beers, you'll need a _new_ shelf because the shelf with 99 beers _cannot_ mutabe changed (i.e. mutate).
-
-This seems impractical (think of the garbage collection!), and difficult to understand. 
-
-In a pure functional language this concept of immutable state is taken even one step further - we need to know how the state was changed. In a pure functional language state changes are realized with functions which can be seen and reduced - which can get very complex as the entire state of the world (the program) needs to be traceable to every action that caused a change. 
+Does the real world have mutable state? Certainly seems like the mutable state matches our _view_ of the world better and I can't argue with that -- this is the "pure functional programming is a lie"...
 
 ### Diagram
 
@@ -66,9 +55,9 @@ In this drawing, x had an assigned value of 25 and after calling f(x) the output
 
 * In a pure functional language, x being 25 will always give 5 as an output. (in fact the whole thing can be substituted for the output)
 * In a impure functional language, i.e. one that allows side effects, sometimes when I put 25 in, the output might be 5 and maybe other times it comes out as 3.1415. This is called a having _side effects_. (for example getTime() will always yeild a different result)
-* In a impure functional language that allows *mutation* sometimes 25 comes out 5 or 3.1415 and sometimes x is might somewhat magically change to something like 52.
+* In a impure functional language that allows *mutation* sometimes 25 comes out 5 or 3.1415 and sometimes *x* might _somewhat magically change to some new value like 52_.
 
-Of these three cases, *mutation* is the hardest one to understand and compose because the black box can no longer be treated as a black box - it can affect the world outside the box. We must look into the black box to understand what it did to x (or to see if it will do something to x).
+Of these three cases, *mutation* is the hardest one to understand and compose because the black box can no longer be treated as a black box - it can affect the world outside the box (the magical change of x). We must look into the black box to understand what it did to x (or to see if it might change x).
 
 # Programming Language Classifications
 
@@ -158,24 +147,30 @@ You don't have to understand this diagram, but notice how the lines feedback on 
 
 The fact that time is real has further implications. 
 
-## Distribution = No Global State
+## Distribution - Global State is a Lie
 
 If time is real then it also prevents us from knowing the state of the entire world at any point in time. We can't have a global state, but we know our a local state within some reference (a world).
 
 
 What does this picture look like: 
 
-![Elixir]({{ site.url }}/img/erlang_category.png)
+![Elixir]({{ site.url }}/img/worlds.png)
 
 This is where side effects come from - things changes outside our local reference even though state might be immutable inside a "world".
 
 So, even though each world internally uses immutable state, if viewed from the outside, i.e. observed, then it has state. This is one of things that confuses people about Elixir - it seems there is state everywhere, but at the same time data is immutable!
 
-In the Erlang/Elixir these independent "worlds" that each have their own local and immutable state are *processes*. Processes have observable state, which can be observed from the outside by sending a message to the process and asking it for the state and the process in turn sending you a response. Each process is a consistent world unto itself and has nothing shared with other processes.
+In the Erlang/Elixir these independent "worlds" that each have their own local and immutable state are *processes*. Processes have observable state, which can be seen by sending a message to the process and asking it, and then the process sending you a response. Each process is a consistent world unto itself and has nothing shared with other processes.
 
-This also matches the real world - you can’t know what’s happening somewhere else - then state must be communicated to be known. _This is especially true nowadays as computing has become increasingly distributed and parallel even on a small scale. For example, in multi-core computers each core has it's own dedicated cached memory and so getting a value from another core requires requesting it and copying._
+This also matches the real world - state must be communicated to be known. _This is especially true nowadays as computing has become increasingly distributed and parallel even on a small scale._ https://tomjoro.github.io/2017-01-31-world-changed/
 
-Processes can't interfere with other processes by definition, and hence can be cleanly terminated at any time. This in turn guarantees that the system as a whole can continue to run predictably regardless of the failure of individual parts. Programming languages that have shared mutable state, at any level and through any mechanism, cannot provide this guarantee. The only way to provide this guarantee is completely ban shared mutatable state (processes can only communicate by messaging).
+Process and the share-nothing approach has great benefits:
+* Fail without interfering with other processes
+* Cleanly terminated (from the outside) 
+* Take care of their own garbage
+* etc.
+
+In Elixir, individual processes can fail, self-destruct, or be killed, but the system as a whole can continue to run (guaranteed). 
 
 # Is Pure Functional Programming a Lie?
 
