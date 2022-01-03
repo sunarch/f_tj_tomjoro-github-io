@@ -181,7 +181,11 @@ In Elixir, individual processes can fail, self-destruct, or be killed, but the s
 
 Processes also make programming easier and code simpler, but that's another blog: https://tomjoro.github.io/2021-12-30-elixir-doesnt-look-very-functional/
 
-# Elixir's Category 
+# Is Pure Functional Programming a Lie? 
+
+Back to the original question: Is pure functional programming a lie? It's not a lie, but it doesn't always map well to the real world of computers -  but not because of *immutability*, but from not taking *time* into the equation. 
+
+## Elixir's Category 
 
 One reason that it's hard to describe Elixir to new Elixir developers is that there's no "category" to refer to: is it "impure functional with distributed and immutable state" or "functional, dynamic, safe language" - it's a lot more than just an impure functional language.
 
