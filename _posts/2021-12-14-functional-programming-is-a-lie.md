@@ -10,7 +10,7 @@ As more computer languages adopt functional constructs it seems *pure* functiona
 
 Some developers claim *pure* functional languages aren't practical, i.e. they are too strict and they don't reflect the "real" (reality) world of computers because real computers have mutable state, and so trying to program without mutable state is just a mathematical exercise (and also hard for software developers). What's reality got to do with programming languages?
 
-Why choose a *pure* or *impure* functional language? And are there really only 2 choices? Either we reject mutability and program in a pure functional language, or we just accept mutable reality and join the impure crowd? 
+Why choose between an *pure* or *impure* functional language? And are there really only 2 choices? Either we reject mutability and program in a pure functional language, or we just accept mutable reality and join the impure crowd? 
 
 I've thought about this question since I started using Elixir (5 years now), when trying to build a mental framework for categorizing languages.
 
@@ -53,11 +53,11 @@ Making this discussion as simple as I can:
 
 In this drawing, x had an assigned value of 25 and after calling f(x) the output was 5. Possibly this function computes the square root, but we can't know because it's a black box. 
 
-* In a pure functional language, x being 25 will always give 5 as an output. (in fact the whole thing can be substituted for the output)
-* In a impure functional language, i.e. one that allows side effects, sometimes when I put 25 in, the output might be 5 and maybe other times it comes out as 3.1415. This is called a having _side effects_. (for example getTime() will always yeild a different result)
-* In a impure functional language that allows *mutation* sometimes 25 comes out 5 or 3.1415 and sometimes *x* might _somewhat magically change to some new value like 52_.
+* Pure functional language: x being 25 will always give 5 as an output. (in fact the whole thing can be substituted for the output, i.e. no side-effects)
+* Impure functional language with side effects: x being 25, sometimes the output might be 5 and maybe other times it comes out as 3.1415. 
+* Impure functional language with *mutation*: sometimes 25 comes out 5 or 3.1415 and sometimes *x* might _somewhat magically change to some new value like 52_.
 
-Of these three cases, *mutation* is the hardest one to understand and compose because the black box can no longer be treated as a black box - it can affect the world outside the box (the magical change of x). We must look into the black box to understand what it did to x (or to see if it might change x).
+Of these three cases, *mutation* is the hardest one to understand and compose because the black box can no longer be treated as a black box - it can affect the world outside the box (the magical change of x). We must look inside the black box to understand what it did to x (or to see if it might change x).
 
 # Programming Language Classifications
 
@@ -81,14 +81,14 @@ Here's some drawings I made that focuses on only Pure and Impure as defined by 1
 
 ## Pure and Impure
 This is the categorization on Wikipedia:
-* "Pure" = No side effects, and "Impure" = side effects
-* "Immutable" = No mutation of data, "Mutate" = allows mutation of data
+* "Pure" = No side effects, and 
+* "Impure" = side effects
+
+Here's a diagram:
 
 ![Elixir]({{ site.url }}/img/pure_impure.png)
 
 But where is Erlang and Elixir in this drawing???
-
-## Elixir and Erlang 
 
 Elixir and Erlang are impure, yet they do have immutable (only) data. You get an interesting cross category here:
 
@@ -97,19 +97,21 @@ Elixir and Erlang are impure, yet they do have immutable (only) data. You get an
 Erlang and Elixir: Impure, yet Immutable.
 
 Here's what the list of functional languages should look like:
-* Pure functional languages with immutable data
-* Impure functional languages with immutable data
-* Functional languages
+* Pure functional languages: immutable data and no side-effects
+* Impure functional languages with immutable data: allow side effects
+* Functional languages: allow side-effects and mutation
 
-## But "Mutation is a reality, the correct approach is disciplined mutation"
+### But "Mutation is a reality, the correct approach is disciplined mutation"
 
- I can hear a thousand developer's voices calling out that: Yes, but Rust, Clojure, etc., have immutable data constructs and that if you just keep your mutations in a box then you're ok.
+I can hear a thousand developer's voices calling out that: Yes, but Rust, Clojure, etc., have immutable data constructs and that if you just keep your mutations under control and in a box then you're ok.
  
-"Mutation is a reality, the correct approach is disciplined mutation. "https://news.ycombinator.com/item?id=18044656
+Reflected by this statement: "Mutation is a reality, the correct approach is disciplined mutation. "https://news.ycombinator.com/item?id=18044656
 
-Mutation is like a virus and has severe consequences in a language: if you allow any possibility to mutate data in any way (like "unsafe" mode) then the language looses the ability to provide certain guarantees as we will see in the next sections (and add threads to mutation and you have a recipe for nondeterminism) - https://www2.eecs.berkeley.edu/Pubs/TechRpts/2006/EECS-2006-1.pdf
+Maybe this discussion is for another blog, but the reason unsafe modes and mutation exists in these languages is because developers use them - and often use them incorrectly - there are studies that show vulnerabilities due to memory violations are not that uncommon: https://cseweb.ucsd.edu/~yiying/RustStudy-PLDI20.pdf
 
-The main issue here is that language designers often try to solve _all problems_ with a single language. Erlang and Elixir have a different answer: __If you need mutation use another language__.  Seriously, that's not that different from "box mutation in unsafe mode" - it's just that the boxing has to be absolutely solid. Also, the justification for having mutability is often for _performance_ reasons, and that performance gained by using mutation is dimished when you consider highly parallel and concurrent systems (which is pretty much everything nowadays). https://tomjoro.github.io/2017-01-31-world-changed/
+Language designers often try to solve _all problems_ with a single language. The justification for having mutability is often for _performance_ reasons, but the performance gained by using mutation is dimished when you consider highly parallel and concurrent systems (which is pretty much everything nowadays). https://tomjoro.github.io/2017-01-31-world-changed/
+
+Erlang and Elixir have a different answer: __If you need mutation, then use some other language__. This doesn't mean you can't use Elixir, it just means the unsafe parts need to be in other languages.
 
 # The Real World
 
@@ -117,13 +119,13 @@ Immutability - certainly Computer Science (everything is expressible with recurs
 
 Are computers just _state machines_ that represent computation through _global state_ changes?  https://www.quora.com/Is-there-anything-you-don-t-like-about-Functional-Programming/answer/Jussi-Raunio?ch=10&share=4a170b91&srid=lM1b
 
-Real computers:
-* indeed have mutable memory,
-* have global state, well sort of - computers are connected to networks, have multiple cores, caches, I/O, GPU, etc. so how can global state exist?
+It seems real computers have
+* Mutable memory 
+* Global state 
 
-It really seems that the real world has mutation. 
+If working with functional programming and immutable data is so un-natural then why bother?
 
-Until I realized what was missing from the comparison.
+I thought about this, until I realized that an important piece is missing from the world view: time.
 
 ## Time
 
@@ -147,20 +149,19 @@ You don't have to understand this diagram, but notice how the lines feedback on 
 
 The fact that time is real has further implications. 
 
-## Distribution - Global State is a Lie
+## Global State
 
-If time is real then it also prevents us from knowing the state of the entire world at any point in time. We can't have a global state, but we know our a local state within some reference (a world).
+Computers are connected to networks, have multiple cores, caches, I/O, GPU, etc. so how can global state exist? It can't, because the world is distributed.
 
+Time is real, and so it also prevents us from knowing the state of the entire world at any point in time. There are actually many worlds and we can only know our a local state within some reference (a single world).
 
 What does this picture look like: 
 
 ![Elixir]({{ site.url }}/img/worlds.png)
 
-This is where side effects come from - things changes outside our local reference even though state might be immutable inside a "world".
-
 So, even though each world internally uses immutable state, if viewed from the outside, i.e. observed, then it has state. This is one of things that confuses people about Elixir - it seems there is state everywhere, but at the same time data is immutable!
 
-In the Erlang/Elixir these independent "worlds" that each have their own local and immutable state are *processes*. Processes have observable state, which can be seen by sending a message to the process and asking it, and then the process sending you a response. Each process is a consistent world unto itself and has nothing shared with other processes.
+In the Erlang/Elixir these independent "worlds" that each have their own local and immutable state are *processes*. Processes are single threads of execution that have observable state. State can be seen by sending a message to the process and asking it, and then the process sending you a response. Each process is a consistent world unto itself and has nothing shared with other processes. There are no mutexes, etc., in Elixir because there are no threads that can share memory.
 
 This also matches the real world - state must be communicated to be known. _This is especially true nowadays as computing has become increasingly distributed and parallel even on a small scale._ https://tomjoro.github.io/2017-01-31-world-changed/
 
@@ -170,25 +171,17 @@ Process and the share-nothing approach has great benefits:
 * Take care of their own garbage
 * etc.
 
-In Elixir, individual processes can fail, self-destruct, or be killed, but the system as a whole can continue to run (guaranteed). 
+In Elixir, individual processes can fail, self-destruct, or be killed, but the system as a whole can continue to run in safely (guaranteed). 
 
-# Is Pure Functional Programming a Lie?
-
-Back to the original question: Is pure functional programming a lie? Saying pure functional programming is a lie is like saying math is a lie. It's not a lie, but it doesn't always map well to the real world of computers -  but that's not because of immutability, but instead stems from not taking *time* and *distribution* into account. 
+Processes also make programming easier and code simpler, but that's another blog: https://tomjoro.github.io/2021-12-30-elixir-doesnt-look-very-functional/
 
 # Elixir's Category 
 
-There is some middle ground, a category, between *pure-functional languages* and *impure functional languages* -- and that middleground is a category that Elixir owns and I belive this is one factor that drives the continued growth of Elixir. Elixir is not a "solve all problems" language, but it does work efficiently in more situations that many developers thought possible.
+One reason that it's hard to describe Elixir to new Elixir developers is that there's no "category" to refer to: is it "impure functional with distributed and immutable state" or "functional, dynamic, safe language" - it's a lot more than just an impure functional language.
 
-Giving this category a name is difficult: is it "impure functional with distributed and immutable state" or "functional, dynamic, safe language", or ?. How about a "Reliable Language"?
+There is a middle ground between *pure-functional languages* and *impure functional languages*, and that middle ground is a category that Elixir defines. Elixir might not be a "solve all problems" language, but it does work efficiently in more situations that many developers thought possible. This creates a situation that drives the continued growth and adoption of Elixir.
 
-_How is reliability defined? Reliable computing is correct functioning even if individual hardware or software components fail for any reason. The definition also includes secure computing which is about intentional attaks on your system._
-
-Erlang (and hence Elixir) and the BEAM virtual machine that it runs on, first and foremost goal is to be reliable. Every decision about the language (and BEAM execution environment) as it evolved has prioritized having reliability as the most important criteria. 
-* Immutable data is safer, especially in a concurrent environment
-* Processes make writing code with immutable data more practical and simple  - (https://tomjoro.github.io/2021-12-30-elixir-doesnt-look-very-functional/)
-
-Prioritizing reliability actually works in practice: Elixir it is consistently fast (not the fastest), extremely fair, quite versatile (not the most versatile), scalable, easy to undestand and develop with, and most importantly reliable. 
+And there's nothing un-natural about it.
 
 # Disclaimer
 
