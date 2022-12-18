@@ -23,7 +23,7 @@ Java struggled for years with method to safely kill an executing thread. In fact
 
 It's interesting/amusing that Rust followed the same path - didn’t they learn from the struggles of Java? Rust had a kill thread and now it’s been deprecated because it’s not safe, and it' can't be made safe (link to long discussion thread).
 
-You can save yourself years of work: If you making a language with shared mutable state, then the answer is no.  Shared mutable state means one thread access the memory of another thread somehow, through any mechanism. Doesn’t matter if the mechanism is protected, or requires careful declarations, etc. If the mechanism exists in any form it’s a non-started. 
+You can save yourself years of work: If you making a language with shared mutable state, then the answer is no.  Shared mutable state means one thread access the memory of another thread somehow, through any mechanism. Doesn’t matter if the mechanism is protected, or requires careful declarations, etc. If the mechanism exists in any form it’s a non-starter. 
 
 There’s actually a proof for this somewhere - I read it a long time ago and it made my brain hurt, but I remember the conclusion and that’s what is important.
 
@@ -42,4 +42,4 @@ In Lord of the Rings, Gandalf actually says “You cannot pass”, whereas peopl
 *“You cannot pass," he said. The orcs stood still, and a dead silence fell. "I am a servant of the Secret Fire, wielder of the flame of Anor. You cannot pass. The dark fire will not avail you, flame of Udûn. Go back to the Shadow! You cannot pass.”*
 
 
-
+(c) 2023 Thomas O'Rourke
