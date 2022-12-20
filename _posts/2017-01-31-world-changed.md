@@ -52,7 +52,7 @@ Moving to Erlang. What if we just took away the guns: no threads, no mutability.
 I have to agree I was in the same mind-set about 18 months ago. But I was wrong, and I (happily) admit it. I've been programming for a long time, and I felt like I was blindsided, why didn't I hear about this before? Because I had mistakenly assumed the world was the same - it is not.
 
 What happened: Moore's law ends, lots of memory, speed, concurrency everywhere. Simple networked services that run reliably for long periods - sound familiar?
-Languages like Haskell don't even know what we're talking about. Haskell takes one step further than Erlang and says not only is the language immutable, the functions are really mathematical functions. That means if you pass f(1) into a function f and it returns 42, then it should always return 42 given the input of 1. Erlang thinks this is going to far. To an Erlang programmer Haskell is an impractical language. How can you make a function to get the current time?
+Languages like Haskell don't even know what we're talking about. Haskell takes one step further than Erlang and says not only is the language immutable, the functions are really mathematical functions. That means if you pass f(1) into a function f and it returns 42, then it should always return 42 given the input of 1. Erlang thinks this is going too far. To an Erlang programmer Haskell is an impractical language. How can you make a function to get the current time?
 
 ## So, what happened?
 

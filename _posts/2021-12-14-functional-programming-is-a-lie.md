@@ -23,13 +23,13 @@ In the early days of computer science, a lot of work was done to try to use math
 There's no exact definition of fuctionally pure purity, but generally it's these things:
 * Immutable state / data, 
 * No side-effects 
-* First class functions (functions can treated as data)
+* First class functions (functions can be treated as data)
 * etc. 
 
 Javascript is a functional language. Why isn't it a *pure* functional language? 
 
-* Javascript fails purity because it allows for mutation of state and side effects - most mainstream language fail for this same reason: Java, Go, C#, Rust, Python, Ruby, etc. 
-* Rust fails pureity because it has unsafe modes and allow side effects
+* Javascript fails purity because it allows for mutation of state and side effects - most mainstream languages fail for this same reason: Java, Go, C#, Rust, Python, Ruby, etc. 
+* Rust fails purity because it has unsafe modes and allows side effects
 * Erlang and Elixir fail this test because they allow side effects
 
 What is immutable data and what is a side effect?
@@ -105,7 +105,7 @@ Here's what the list of functional languages should look like:
 
 I can hear a thousand developer's voices calling out that: Yes, but Rust, Clojure, etc., have immutable data constructs and that if you just keep your mutations under control and in a box then you're ok.
  
-Reflected by this statement: "Mutation is a reality, the correct approach is disciplined mutation. "https://news.ycombinator.com/item?id=18044656
+Reflected by this statement: "Mutation is a reality, the correct approach is disciplined mutation." https://news.ycombinator.com/item?id=18044656
 
 Maybe this discussion is for another blog, but the reason unsafe modes and mutation exists in these languages is because developers use them - and often use them incorrectly - there are studies that show vulnerabilities due to memory violations are not that uncommon: https://cseweb.ucsd.edu/~yiying/RustStudy-PLDI20.pdf
 
